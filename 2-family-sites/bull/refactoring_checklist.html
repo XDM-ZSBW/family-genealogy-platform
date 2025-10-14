@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gladys Folder - Refactoring Checklist - Gladys Klingenberg's Life Story Wiki</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #3498db;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Wiki links */
+        .wiki-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Images */
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .image-item {
+            text-align: center;
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .image-item img:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-item a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation footer */
+        .nav-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .nav-section h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-section ul {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .nav-section li {
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Search box */
+        .search-box {
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            background: #ecf0f1;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumbs-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumbs a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .header, .sidebar, .nav-footer {
+                display: none;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .main-content {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Gladys Klingenberg's Life Story Wiki</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👥 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="images.html" class="nav-button">🖼️ Images</a>
+                <a href="graph.html" class="nav-button">🕸️ Graph</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="index.html">Home</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search wiki..." onkeyup="searchWiki(this.value)">
+            </div>
+            
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="index.html">🏠 Wiki Home</a></li>
+                <li><a href="people.html">👥 All People (16)</a></li>
+                <li><a href="places.html">📍 All Places (17)</a></li>
+                <li><a href="images.html">🖼️ All Images (306)</a></li>
+                <li><a href="graph.html">🕸️ Relationship Graph</a></li>
+            </ul>
+            
+            <h3>Key People</h3>
+            <ul>
+                <li><a href="people/gladys_klingenberg.html">Gladys Klingenberg</a></li>
+                <li><a href="people/tom_herrman.html">Tom Herrman</a></li>
+                <li><a href="people/bryant_herrman.html">Bryant Herrman</a></li>
+                <li><a href="people/mary_safrona.html">Mary Safrona</a></li>
+            </ul>
+            
+            <h3>Notable Places</h3>
+            <ul>
+                <li><a href="places/family_farm.html">Family Farm</a></li>
+                <li><a href="places/lutheran_church.html">Lutheran Church</a></li>
+                <li><a href="places/minnesota.html">Minnesota</a></li>
+                <li><a href="places/chicago.html">Chicago</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="content">
+                <h1>Gladys Folder - Refactoring Checklist</h1>
+<p><em>Practical, actionable checklist for refactoring the Gladys wiki system</em></p>
+<hr />
+<h2>📋 How to Use This Checklist</h2>
+<ol>
+<li>Work through tasks in order by phase</li>
+<li>Check off items as completed: <code>- [ ]</code> → <code>- [x]</code></li>
+<li>Note blockers or issues in the "Notes" section at bottom</li>
+<li>Update "Last Updated" date when making changes</li>
+<li>Link related commits/PRs in notes</li>
+</ol>
+<p><strong>Status Legend:</strong>
+- ⬜ Not started
+- 🔄 In progress
+- ✅ Complete
+- ⚠️ Blocked
+- ❌ Cancelled</p>
+<hr />
+<h2>🎯 Phase 1: Structure &amp; Documentation (Priority: CRITICAL)</h2>
+<h3>1.1 Documentation ✅</h3>
+<ul>
+<li>[x] Create REFACTORING_INDEX.md</li>
+<li>[x] Create QUICK_REFERENCE.md</li>
+<li>[x] Create STRUCTURE_MAP.md</li>
+<li>[x] Create CODE_DEPENDENCIES.md</li>
+<li>[x] Create REFACTORING_CHECKLIST.md (this file)</li>
+<li>[ ] Review all documentation for accuracy</li>
+</ul>
+<h3>1.2 Verify Current State</h3>
+<ul>
+<li>[ ] Confirm 806 PNG files exist in <code>images/</code>
+  <code>powershell
+  Get-ChildItem Gladys\images\*.png | Measure-Object | Select Count</code></li>
+<li>[ ] Confirm 806 MD files exist in <code>s_letter/images/</code>
+  <code>powershell
+  Get-ChildItem Gladys\s_letter\images\*.md | Measure-Object | Select Count</code></li>
+<li>[ ] Confirm 16 people files exist
+  <code>powershell
+  Get-ChildItem Gladys\s_letter\people\*.md | Measure-Object | Select Count</code></li>
+<li>[ ] Verify all wikilinks work (no broken links)</li>
+<li>[ ] Test navigation from main index to all pages</li>
+</ul>
+<h3>1.3 Create Version Control Baseline</h3>
+<ul>
+<li>[ ] Create <code>.gitignore</code> file
+  ```
+  # Python
+  <strong>pycache</strong>/
+  <em>.py[cod]
+  </em>$py.class
+  *.so
+  .Python
+  venv/</li>
+</ul>
+<p># Generated files
+  *.log
+  extraction_cache.json</p>
+<p># Large binaries (optional)
+  # <em>.png
+  # </em>.pdf</p>
+<p># OS
+  .DS_Store
+  Thumbs.db
+  <code>``
+- [ ] Commit current state as baseline
+- [ ] Tag as</code>v0.1-baseline`</p>
+<hr />
+<h2>🔧 Phase 2: Code Cleanup (Priority: HIGH)</h2>
+<h3>2.1 Extract Common Utilities</h3>
+<ul>
+<li>[ ] Create <code>utils/</code> directory</li>
+<li>[ ] Create <code>utils/__init__.py</code></li>
+<li>[ ] Create <code>utils/filename_utils.py</code></li>
+<li>[ ] Extract <code>safe_filename()</code> function</li>
+<li>[ ] Add unit tests</li>
+<li>[ ] Create <code>utils/navigation.py</code></li>
+<li>[ ] Extract navigation footer generation</li>
+<li>[ ] Add customization options</li>
+<li>[ ] Update all scripts to use new utilities</li>
+</ul>
+<h3>2.2 Create Shared Wiki Generator</h3>
+<ul>
+<li>[ ] Create <code>wiki_generator.py</code></li>
+<li>[ ] Extract <code>WikiGenerator</code> base class</li>
+<li>[ ] <code>create_person_page()</code></li>
+<li>[ ] <code>create_place_page()</code></li>
+<li>[ ] <code>create_theme_page()</code></li>
+<li>[ ] <code>create_main_index()</code></li>
+<li>[ ] <code>create_wiki_home()</code></li>
+<li>[ ] Add comprehensive docstrings</li>
+<li>[ ] Add unit tests for each method</li>
+</ul>
+<h3>2.3 Create Configuration System</h3>
+<ul>
+<li>[ ] Create <code>config.py</code></li>
+<li>[ ] Define <code>Config</code> class with all paths</li>
+<li>[ ] Add configuration for:</li>
+<li>[ ] PDF path</li>
+<li>[ ] Wiki root directory</li>
+<li>[ ] Images directory</li>
+<li>[ ] OCR settings</li>
+<li>[ ] Entity extraction patterns</li>
+<li>[ ] Update all scripts to use <code>Config</code></li>
+</ul>
+<h3>2.4 Refactor Main Scripts</h3>
+<ul>
+<li>[ ] Update <code>create_pdf_wiki.py</code></li>
+<li>[ ] Use <code>Config</code> for paths</li>
+<li>[ ] Use <code>WikiGenerator</code> for page creation</li>
+<li>[ ] Use <code>utils.filename_utils</code></li>
+<li>[ ] Add error handling</li>
+<li>[ ] Add logging</li>
+<li>[ ] Update <code>update_wiki_with_all_people.py</code></li>
+<li>[ ] Use <code>Config</code> for paths</li>
+<li>[ ] Use <code>WikiGenerator</code> for page creation</li>
+<li>[ ] Remove duplicate code</li>
+<li>[ ] Add error handling</li>
+<li>[ ] Add logging</li>
+<li>[ ] Update <code>ocr_entity_extraction.py</code></li>
+<li>[ ] Use <code>Config</code> for settings</li>
+<li>[ ] Add error handling</li>
+<li>[ ] Add logging</li>
+</ul>
+<hr />
+<h2>📝 Phase 3: Content Enhancement (Priority: MEDIUM)</h2>
+<h3>3.1 Manual PDF Review</h3>
+<ul>
+<li>[ ] Open <code>MyLifeStoryGladys Klingenberg.pdf</code></li>
+<li>[ ] Review first 20 pages for people/places</li>
+<li>[ ] Note key locations mentioned:</li>
+<li>[ ] Cities/towns: <strong><em>_</em></strong><strong><em>_</em></strong>_</li>
+<li>[ ] Addresses: <strong><em>_</em></strong><strong><em>_</em></strong>_</li>
+<li>[ ] Schools: <strong><em>_</em></strong><strong><em>_</em></strong>_</li>
+<li>[ ] Churches: <strong><em>_</em></strong><strong><em>_</em></strong>_</li>
+<li>[ ] Other places: <strong><em>_</em></strong><strong><em>_</em></strong>_</li>
+<li>[ ] Note life themes observed:</li>
+<li>[ ] <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>__</li>
+<li>[ ] <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>__</li>
+<li>[ ] <strong><em>_</em></strong><strong><em>_</em></strong><strong><em>_</em></strong>__</li>
+</ul>
+<h3>3.2 Add Places Content</h3>
+<ul>
+<li>[ ] Create at least 5 place pages in <code>s_letter/places/</code></li>
+<li>[ ] Update <code>s_letter/index/</code> to include <code>places.md</code></li>
+<li>[ ] Update <code>s_letter/README.md</code> with places section</li>
+<li>[ ] Update <code>Gladys_Life_Index.md</code> with places</li>
+<li>[ ] Link places from relevant person pages</li>
+</ul>
+<h3>3.3 Add Themes Content</h3>
+<ul>
+<li>[ ] Identify 3-5 major life themes</li>
+<li>[ ] Create theme pages in <code>s_letter/themes/</code></li>
+<li>[ ] Update <code>s_letter/index/</code> to include <code>themes.md</code></li>
+<li>[ ] Update <code>s_letter/README.md</code> with themes section</li>
+<li>[ ] Update <code>Gladys_Life_Index.md</code> with themes</li>
+</ul>
+<h3>3.4 Enhance People Content</h3>
+<ul>
+<li>[ ] Review and improve descriptions for:</li>
+<li>[ ] Gladys Klingenberg (add bio details)</li>
+<li>[ ] Tom Herrman (add relationship info)</li>
+<li>[ ] Bryant Herrman (add relationship info)</li>
+<li>[ ] Other key people</li>
+<li>[ ] Add more relationship connections</li>
+<li>[ ] Add more contextual quotes from PDF</li>
+<li>[ ] Verify all page references are accurate</li>
+</ul>
+<hr />
+<h2>🏗️ Phase 4: Structural Changes (Priority: MEDIUM)</h2>
+<h3>4.1 Rename Folders</h3>
+<p><strong>⚠️ This requires updating ALL internal references!</strong></p>
+<ul>
+<li>[ ] Create migration script <code>scripts/rename_s_letter_to_wiki.py</code></li>
+<li>[ ] Test migration script on copy of folder</li>
+<li>[ ] Back up entire Gladys folder</li>
+<li>[ ] Run migration script</li>
+<li>[ ] Verify all links still work</li>
+<li>[ ] Update all documentation</li>
+<li>[ ] Commit with detailed message</li>
+</ul>
+<p>Script template:</p>
+<pre><code class="language-python"># scripts/rename_s_letter_to_wiki.py
+import shutil
+from pathlib import Path
+import re
+
+def update_wikilinks(file_path):
+    &quot;&quot;&quot;Update all wikilinks in a markdown file&quot;&quot;&quot;
+    content = file_path.read_text(encoding='utf-8')
+    # Replace s_letter with wiki in all links
+    updated = content.replace('s_letter/', 'wiki/')
+    updated = updated.replace('[[s_letter/', '[[wiki/')
+    file_path.write_text(updated, encoding='utf-8')
+
+def main():
+    base = Path(&quot;Gladys&quot;)
+
+    # Rename directory
+    old_path = base / &quot;s_letter&quot;
+    new_path = base / &quot;wiki&quot;
+    shutil.move(str(old_path), str(new_path))
+
+    # Update all markdown files
+    for md_file in base.rglob(&quot;*.md&quot;):
+        update_wikilinks(md_file)
+</code></pre>
+<h3>4.2 Reorganize Scripts</h3>
+<ul>
+<li>[ ] Create <code>scripts/</code> directory</li>
+<li>[ ] Move generation scripts to <code>scripts/</code></li>
+<li>[ ] Create <code>scripts/__init__.py</code></li>
+<li>[ ] Update import paths</li>
+<li>[ ] Create <code>scripts/README.md</code> with usage instructions</li>
+</ul>
+<hr />
+<h2>🧪 Phase 5: Testing (Priority: HIGH)</h2>
+<h3>5.1 Unit Tests</h3>
+<ul>
+<li>[ ] Create <code>tests/</code> directory</li>
+<li>[ ] Create <code>tests/__init__.py</code></li>
+<li>[ ] Create test files:</li>
+<li>[ ] <code>tests/test_filename_utils.py</code></li>
+<li>[ ] <code>tests/test_wiki_generator.py</code></li>
+<li>[ ] <code>tests/test_entity_extractor.py</code></li>
+<li>[ ] <code>tests/test_config.py</code></li>
+<li>[ ] Achieve &gt;80% code coverage</li>
+<li>[ ] Set up pytest configuration</li>
+<li>[ ] Add tests to CI (if applicable)</li>
+</ul>
+<h3>5.2 Integration Tests</h3>
+<ul>
+<li>[ ] Create <code>tests/test_integration.py</code></li>
+<li>[ ] Test full wiki generation flow</li>
+<li>[ ] Test wiki update flow</li>
+<li>[ ] Test with sample PDF</li>
+<li>[ ] Verify output structure</li>
+<li>[ ] Verify all links work</li>
+</ul>
+<h3>5.3 Manual Testing</h3>
+<ul>
+<li>[ ] Generate fresh wiki from scratch</li>
+<li>[ ] Verify all 16 people pages created</li>
+<li>[ ] Verify all 806 image pages created</li>
+<li>[ ] Click through all navigation links</li>
+<li>[ ] Check for broken wikilinks</li>
+<li>[ ] Verify page numbers are correct</li>
+</ul>
+<hr />
+<h2>🔍 Phase 6: Advanced Features (Priority: LOW)</h2>
+<h3>6.1 Command-Line Interface</h3>
+<ul>
+<li>[ ] Create <code>wiki_cli.py</code></li>
+<li>[ ] Add argument parsing with argparse</li>
+<li>[ ] Support commands:</li>
+<li>[ ] <code>generate</code> - Generate new wiki</li>
+<li>[ ] <code>update</code> - Update existing wiki</li>
+<li>[ ] <code>validate</code> - Check for broken links</li>
+<li>[ ] <code>stats</code> - Show wiki statistics</li>
+<li>[ ] Add <code>--help</code> documentation</li>
+<li>[ ] Create man page or detailed help</li>
+</ul>
+<h3>6.2 Search Functionality</h3>
+<ul>
+<li>[ ] Generate search index (JSON)</li>
+<li>[ ] Create search JavaScript (optional)</li>
+<li>[ ] Add search page to wiki</li>
+<li>[ ] Test search functionality</li>
+</ul>
+<h3>6.3 Visualization</h3>
+<ul>
+<li>[ ] Create family tree visualization</li>
+<li>[ ] Use Mermaid or Graphviz</li>
+<li>[ ] Add to wiki as diagram</li>
+<li>[ ] Create timeline of events</li>
+<li>[ ] Create image gallery pages</li>
+<li>[ ] Add statistics page</li>
+</ul>
+<h3>6.4 Export Features</h3>
+<ul>
+<li>[ ] Add PDF export functionality</li>
+<li>[ ] Add EPUB export functionality</li>
+<li>[ ] Add static site generation (Jekyll/Hugo)</li>
+<li>[ ] Create print-friendly CSS</li>
+</ul>
+<hr />
+<h2>📦 Phase 7: Distribution (Priority: LOW)</h2>
+<h3>7.1 Package Setup</h3>
+<ul>
+<li>[ ] Create <code>setup.py</code></li>
+<li>[ ] Create <code>requirements.txt</code></li>
+<li>[ ] Create <code>README.md</code> for package</li>
+<li>[ ] Add license file</li>
+<li>[ ] Create <code>MANIFEST.in</code></li>
+</ul>
+<h3>7.2 Documentation</h3>
+<ul>
+<li>[ ] Create user guide</li>
+<li>[ ] Create developer guide</li>
+<li>[ ] Add API documentation</li>
+<li>[ ] Create video tutorial (optional)</li>
+<li>[ ] Add examples directory</li>
+</ul>
+<h3>7.3 Release</h3>
+<ul>
+<li>[ ] Tag version <code>v1.0.0</code></li>
+<li>[ ] Create release notes</li>
+<li>[ ] Publish to PyPI (optional)</li>
+<li>[ ] Create GitHub release (if applicable)</li>
+</ul>
+<hr />
+<h2>✅ Quality Gates</h2>
+<p>Check these before considering phase complete:</p>
+<h3>Phase 1 Complete When:</h3>
+<ul>
+<li>[x] All 5 documentation files created</li>
+<li>[ ] Current state verified and documented</li>
+<li>[ ] Baseline commit created</li>
+</ul>
+<h3>Phase 2 Complete When:</h3>
+<ul>
+<li>[ ] Code duplication reduced by &gt;50%</li>
+<li>[ ] All hardcoded paths removed</li>
+<li>[ ] Error handling added to all file operations</li>
+<li>[ ] Logging added to all scripts</li>
+<li>[ ] All existing functionality still works</li>
+</ul>
+<h3>Phase 3 Complete When:</h3>
+<ul>
+<li>[ ] At least 5 places documented</li>
+<li>[ ] At least 3 themes documented</li>
+<li>[ ] All people have meaningful descriptions</li>
+<li>[ ] No empty sections in main index</li>
+</ul>
+<h3>Phase 4 Complete When:</h3>
+<ul>
+<li>[ ] <code>s_letter/</code> renamed to <code>wiki/</code></li>
+<li>[ ] All links updated and working</li>
+<li>[ ] Scripts organized in <code>scripts/</code> directory</li>
+<li>[ ] No broken references</li>
+</ul>
+<h3>Phase 5 Complete When:</h3>
+<ul>
+<li>[ ] Unit test coverage &gt;80%</li>
+<li>[ ] All integration tests passing</li>
+<li>[ ] Manual testing checklist complete</li>
+<li>[ ] No broken links found</li>
+</ul>
+<h3>Phase 6 Complete When:</h3>
+<ul>
+<li>[ ] CLI functional with all commands</li>
+<li>[ ] At least one visualization added</li>
+<li>[ ] Search working (if implemented)</li>
+</ul>
+<h3>Phase 7 Complete When:</h3>
+<ul>
+<li>[ ] Package installable via pip</li>
+<li>[ ] Documentation complete</li>
+<li>[ ] Version 1.0.0 released</li>
+</ul>
+<hr />
+<h2>🚨 Blockers &amp; Issues</h2>
+<h3>Current Blockers</h3>
+<p><em>(List any blockers here)</em></p>
+<ul>
+<li>None currently</li>
+</ul>
+<h3>Known Issues</h3>
+<p><em>(List known issues that need resolution)</em></p>
+<ol>
+<li>Image files may not exist (need verification)</li>
+<li>Places and themes sections empty</li>
+<li>No automated tests</li>
+<li>Hardcoded paths throughout code</li>
+</ol>
+<h3>Decisions Needed</h3>
+<p><em>(List decisions that need to be made)</em></p>
+<ol>
+<li>Should we rename <code>s_letter</code> to <code>wiki</code> or something else?</li>
+<li>Should images be committed to git or .gitignored?</li>
+<li>Do we need CI/CD pipeline?</li>
+<li>Should we create a static site or keep as markdown?</li>
+</ol>
+<hr />
+<h2>📊 Progress Tracking</h2>
+<h3>Overall Progress</h3>
+<pre><code>Phase 1: ████████░░ 80% (4/5 complete)
+Phase 2: ░░░░░░░░░░  0% (0/12 complete)
+Phase 3: ░░░░░░░░░░  0% (0/13 complete)
+Phase 4: ░░░░░░░░░░  0% (0/7 complete)
+Phase 5: ░░░░░░░░░░  0% (0/10 complete)
+Phase 6: ░░░░░░░░░░  0% (0/12 complete)
+Phase 7: ░░░░░░░░░░  0% (0/9 complete)
+───────────────────────────────────
+Total:   ██░░░░░░░░ 6% (4/68 tasks)
+</code></pre>
+<h3>Time Estimates</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Estimated Time</th>
+<th>Actual Time</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase 1</td>
+<td>2 hours</td>
+<td>1 hour</td>
+<td>🔄 In Progress</td>
+</tr>
+<tr>
+<td>Phase 2</td>
+<td>8 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td>Phase 3</td>
+<td>6 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td>Phase 4</td>
+<td>4 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td>Phase 5</td>
+<td>10 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td>Phase 6</td>
+<td>12 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td>Phase 7</td>
+<td>6 hours</td>
+<td>-</td>
+<td>⬜ Not Started</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>48 hours</strong></td>
+<td><strong>1 hour</strong></td>
+<td><strong>2% complete</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>📝 Notes &amp; Comments</h2>
+<h3>Session Log</h3>
+<p><strong>2025-10-14:</strong>
+- Created comprehensive refactoring documentation
+- Completed REFACTORING_INDEX.md
+- Completed QUICK_REFERENCE.md
+- Completed STRUCTURE_MAP.md
+- Completed CODE_DEPENDENCIES.md
+- Completed REFACTORING_CHECKLIST.md
+- Next: Verify image files exist</p>
+<hr />
+<h3>Tips for Refactoring</h3>
+<ol>
+<li><strong>Always test after changes</strong> - Run manual tests to verify functionality</li>
+<li><strong>Commit frequently</strong> - Small, atomic commits are easier to debug</li>
+<li><strong>Update docs</strong> - Keep documentation in sync with code changes</li>
+<li><strong>Ask for help</strong> - If blocked, consult team or documentation</li>
+<li><strong>Take breaks</strong> - Large refactoring is mentally taxing</li>
+</ol>
+<h3>Useful Commands</h3>
+<pre><code class="language-powershell"># Count files
+Get-ChildItem -Recurse -File | Measure-Object | Select Count
+
+# Find broken links (approximate)
+Get-ChildItem -Recurse -Filter &quot;*.md&quot; | Select-String -Pattern &quot;\[\[.*?\]\]&quot;
+
+# Search for hardcoded paths
+Get-ChildItem -Recurse -Filter &quot;*.py&quot; | Select-String -Pattern &quot;E:/&quot;
+
+# Run tests
+python -m pytest tests/ -v
+
+# Generate coverage report
+python -m pytest --cov=. --cov-report=html
+</code></pre>
+<hr />
+<h2>🎯 Definition of Done</h2>
+<p>The Gladys folder refactoring is <strong>complete</strong> when:</p>
+<ul>
+<li>✅ All code duplication eliminated</li>
+<li>✅ All hardcoded paths in config</li>
+<li>✅ Error handling and logging throughout</li>
+<li>✅ Unit test coverage &gt;80%</li>
+<li>✅ Integration tests passing</li>
+<li>✅ No broken links in wiki</li>
+<li>✅ Places section populated (≥5 places)</li>
+<li>✅ Themes section populated (≥3 themes)</li>
+<li>✅ All people have meaningful descriptions</li>
+<li>✅ Folder structure logical and consistent</li>
+<li>✅ CLI tool functional</li>
+<li>✅ Documentation complete and accurate</li>
+<li>✅ Version 1.0.0 tagged and released</li>
+</ul>
+<hr />
+<p><strong>Last Updated:</strong> October 14, 2025<br />
+<strong>Last Updated By:</strong> AI Assistant<br />
+<strong>Current Phase:</strong> Phase 1 (80% complete)<br />
+<strong>Overall Progress:</strong> 6% (4 of 68 tasks)<br />
+<strong>Estimated Completion:</strong> ~48 hours of work remaining</p>
+            </div>
+            
+            <footer class="nav-footer">
+                <div class="nav-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Wiki Home</a></li>
+                        <li><a href="people.html">People Index</a></li>
+                        <li><a href="places.html">Places Index</a></li>
+                        <li><a href="images.html">Images Index</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="graph.html">Relationship Graph</a></li>
+                        <li><a href="javascript:window.print()">Print This Page</a></li>
+                        <li><a href="#" onclick="toggleDarkMode()">Toggle Dark Mode</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>About</h4>
+                    <p>Generated from Gladys Klingenberg's memoir with 350+ pages, 16 people, 17 places, and 306 images.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Search functionality
+        function searchWiki(query) {
+            if (query.length < 2) return;
+            
+            // Simple client-side search implementation
+            const content = document.querySelector('.content');
+            const text = content.textContent.toLowerCase();
+            const queryLower = query.toLowerCase();
+            
+            // Highlight search terms (basic implementation)
+            if (text.includes(queryLower)) {
+                console.log('Search found results for:', query);
+                // In a full implementation, this would highlight results
+            }
+        }
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Handle wiki links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert [[wiki links]] to actual links
+            const content = document.querySelector('.content');
+            if (content) {
+                let html = content.innerHTML;
+                // Convert [[link]] to <a href="link.html" class="wiki-link">link</a>
+                html = html.replace(/\[\[([^\]]+)\]\]/g, function(match, link) {
+                    const parts = link.split('|');
+                    const target = parts[0].trim();
+                    const display = parts[1] ? parts[1].trim() : target;
+                    
+                    // Convert target to filename
+                    let filename = target.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+                    if (filename.startsWith('../')) {
+                        filename = filename.substring(3);
+                    }
+                    if (!filename.endsWith('.html')) {
+                        filename += '.html';
+                    }
+                    
+                    return `<a href="${filename}" class="wiki-link">${display}</a>`;
+                });
+                content.innerHTML = html;
+            }
+        });
+        
+        // Image lightbox
+        function openLightbox(src) {
+            const lightbox = document.createElement('div');
+            lightbox.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                cursor: pointer;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+            `;
+            
+            lightbox.appendChild(img);
+            lightbox.addEventListener('click', () => document.body.removeChild(lightbox));
+            document.body.appendChild(lightbox);
+        }
+        
+        // Add click handlers to images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.content img, .image-gallery img');
+            images.forEach(img => {
+                img.addEventListener('click', () => openLightbox(img.src));
+                img.style.cursor = 'pointer';
+            });
+        });
+    </script>
+</body>
+</html>
