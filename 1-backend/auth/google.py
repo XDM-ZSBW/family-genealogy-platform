@@ -5,7 +5,7 @@ Handles Google OAuth 2.0 flow with family context awareness
 
 import os
 import secrets
-import jwt
+from jose import jwt
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Dict, Any
 from google.auth.transport import requests as google_requests

@@ -21,9 +21,6 @@ COPY . .
 # Create directory for SQLite database
 RUN mkdir -p /app/data
 
-# Make startup script executable
-RUN chmod +x start.sh
-
 # Expose port
 EXPOSE 8000
 
@@ -31,5 +28,5 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
     CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=10)"
 
-# Run the application
-CMD ["./start.sh"]
+# Run the application - use shell form to allow environment variable expansion
+CMD python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
