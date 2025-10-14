@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Genealogy Platform - OAuth Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .family-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .family-section h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .endpoints {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Family Genealogy Platform</h1>
+        <p><strong>OAuth Authentication Test Page</strong></p>
+        
+        <div class="info">
+            <strong>📋 Test Instructions:</strong><br>
+            1. Click a family button below to start OAuth flow<br>
+            2. Sign in with your Google account<br>
+            3. Check your email for verification code<br>
+            4. Click verification link to complete access<br>
+            5. You'll be redirected to the family site
+        </div>
+
+        <div class="endpoints">
+            <h3>🔗 API Endpoints</h3>
+            <p><strong>Backend API:</strong> <code id="backend-url">https://auth.futurelink.zip</code></p>
+            <p><strong>Family Sites:</strong> <code>https://family.futurelink.zip/{family}</code></p>
+            <button onclick="testApiHealth()">Test API Health</button>
+            <button onclick="listFamilies()">List Families</button>
+        </div>
+
+        <h3>👨‍👩‍👧‍👦 Family Access</h3>
+        
+        <div class="family-section">
+            <h3>🐂 Bull Family</h3>
+            <p>Gladys Klingenberg's life story and Bull family history</p>
+            <button onclick="startOAuth('bull')">Access Bull Family Archives</button>
+        </div>
+
+        <div class="family-section">
+            <h3>🧭 North Family</h3>
+            <p>North family genealogy and historical records</p>
+            <button onclick="startOAuth('north')">Access North Family Archives</button>
+        </div>
+
+        <div class="family-section">
+            <h3>🏰 Klingenberg Family</h3>
+            <p>Klingenberg family heritage and genealogy</p>
+            <button onclick="startOAuth('klingenberg')">Access Klingenberg Family Archives</button>
+        </div>
+
+        <div class="family-section">
+            <h3>👨‍🌾 Herrman Family</h3>
+            <p>Herrman family history and genealogical records</p>
+            <button onclick="startOAuth('herrman')">Access Herrman Family Archives</button>
+        </div>
+
+        <div id="status"></div>
+
+        <div class="endpoints">
+            <h3>🔧 Development Info</h3>
+            <p><strong>Current URL:</strong> <code id="current-url"></code></p>
+            <p><strong>User Agent:</strong> <code id="user-agent"></code></p>
+            <p><strong>Timestamp:</strong> <code id="timestamp"></code></p>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_BASE = 'https://auth.futurelink.zip';
+        
+        // Update page info
+        document.getElementById('current-url').textContent = window.location.href;
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+        document.getElementById('timestamp').textContent = new Date().toISOString();
+        
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.innerHTML = message;
+        }
+        
+        async function startOAuth(family) {
+            showStatus(`🔄 Starting OAuth flow for ${family.toUpperCase()} family...`, 'info');
+            
+            try {
+                const response = await fetch(`${BACKEND_BASE}/oauth/start`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ family: family })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showStatus(`✅ Redirecting to Google OAuth for ${family.toUpperCase()} family...`, 'success');
+                    
+                    // Redirect to Google OAuth
+                    window.location.href = data.auth_url;
+                } else {
+                    const error = await response.text();
+                    showStatus(`❌ OAuth start failed: ${error}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`❌ Error starting OAuth: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testApiHealth() {
+            showStatus('🔄 Testing API health...', 'info');
+            
+            try {
+                const response = await fetch(`${BACKEND_BASE}/health`);
+                if (response.ok) {
+                    const data = await response.json();
+                    showStatus(`✅ API is healthy! Status: ${data.status}, Families: ${data.families.join(', ')}`, 'success');
+                } else {
+                    showStatus(`⚠️ API responded with status: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`❌ API health check failed: ${error.message}`, 'error');
+            }
+        }
+        
+        async function listFamilies() {
+            showStatus('🔄 Loading family information...', 'info');
+            
+            try {
+                const response = await fetch(`${BACKEND_BASE}/families`);
+                if (response.ok) {
+                    const data = await response.json();
+                    let familyInfo = '✅ Available families:<br>';
+                    for (const [key, family] of Object.entries(data.families)) {
+                        familyInfo += `<strong>${family.display_name}</strong>: ${family.description}<br>`;
+                    }
+                    showStatus(familyInfo, 'success');
+                } else {
+                    showStatus(`⚠️ Failed to load families: ${response.status}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`❌ Error loading families: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-test API health on page load
+        setTimeout(testApiHealth, 1000);
+    </script>
+</body>
+</html>
