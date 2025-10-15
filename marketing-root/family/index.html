@@ -287,7 +287,7 @@
     <script>
         // Configuration
         const API_BASE = 'https://api.futurelink.zip';
-        const GOOGLE_CLIENT_ID = ''; // Will be configured when backend is set up
+        const GOOGLE_CLIENT_ID = '358471939925-ocfc6aqiia4jela6kon2to84ond129en.apps.googleusercontent.com';
         
         // Available family sites
         const familySites = {
@@ -347,31 +347,49 @@
             loading.style.display = 'block';
             
             try {
-                // For now, redirect to Google OAuth (will be configured with backend)
-                // In production, this would use proper OAuth flow
-                showError('Backend Authentication Setup Required', 
-                    'The authentication system is not yet configured. Please contact the administrator to set up:\n' +
-                    '• Google OAuth Client ID\n' +
-                    '• API backend at api.futurelink.zip\n' +
-                    '• SSL certificates\n\n' +
-                    'For development, family sites are temporarily accessible without authentication.'
-                );
+                // Generate random state for CSRF protection
+                const state = generateRandomString(32);
                 
-                // For development - allow direct access after 3 seconds
-                setTimeout(() => {
-                    const { redirect } = getUrlParams();
-                    if (redirect) {
-                        window.location.href = redirect;
-                    } else {
-                        // Show family selection
-                        showFamilySelection();
-                    }
-                }, 3000);
+                // Get redirect URL from URL params or default to family selection
+                const { redirect } = getUrlParams();
+                const stateData = {
+                    redirect: redirect || '/sites/north570525/', // Default to north family
+                    timestamp: Date.now()
+                };
+                
+                // Store state for verification after OAuth callback
+                sessionStorage.setItem('oauth_state', JSON.stringify(stateData));
+                
+                // Build Google OAuth URL
+                const oauthParams = new URLSearchParams({
+                    client_id: GOOGLE_CLIENT_ID,
+                    response_type: 'code',
+                    scope: 'openid email profile',
+                    redirect_uri: API_BASE + '/oauth/callback',
+                    state: state,
+                    access_type: 'offline',
+                    prompt: 'consent'
+                });
+                
+                const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?${oauthParams.toString()}`;
+                
+                // Redirect to Google OAuth
+                window.location.href = oauthUrl;
                 
             } catch (error) {
-                console.error('Authentication error:', error);
-                showError('Authentication Failed', 'Unable to authenticate with Google. Please try again.');
+                console.error('OAuth initialization error:', error);
+                showError('Authentication Error', 'Failed to initialize Google OAuth. Please try again.');
             }
+        }
+        
+        // Generate random string for OAuth state
+        function generateRandomString(length) {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
         }
         
         // Show error message
@@ -461,7 +479,7 @@
         }
         
         // Check auth on page load
-        // checkExistingAuth();
+        checkExistingAuth();
     </script>
 </body>
 </html>
