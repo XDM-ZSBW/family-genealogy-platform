@@ -1,0 +1,12 @@
+CORRECTED FAMILY SITE URLS (include /family prefix):
+
+bull → https://family.futurelink.zip/family/sites/bull683912/
+herrman → https://family.futurelink.zip/family/sites/herrman242585/
+klingenberg → https://family.futurelink.zip/family/sites/klingenberg422679/
+north → https://family.futurelink.zip/family/sites/north570525/
+
+DIRECT LINKS TO INDEX PAGES:
+bull → https://family.futurelink.zip/family/sites/bull683912/index.html
+herrman → https://family.futurelink.zip/family/sites/herrman242585/index.html  
+klingenberg → https://family.futurelink.zip/family/sites/klingenberg422679/index.html
+north → https://family.futurelink.zip/family/sites/north570525/index.html
