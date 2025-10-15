@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elizabeth Jane Herr North - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development Prototype Banner */
+        .dev-banner {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .dev-banner .dev-text {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #2d7aa0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #2d7aa0;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #1a4d6b;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #1a4d6b;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7aa0;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Wiki links */
+        .wiki-link {
+            color: #2d7aa0;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Person profile section */
+        .person-profile {
+            background: linear-gradient(135deg, #faf0e6, #e8f4f8);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #2d7aa0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .profile-info h2 {
+            color: #1a4d6b;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            border: none;
+            padding: 0;
+        }
+        
+        .profile-info p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+        
+        /* Info cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #2d7aa0;
+        }
+        
+        .info-card h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .info-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+        
+        /* Family connections */
+        .family-connections {
+            background: #fef7f7;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #d4a4a4;
+        }
+        
+        .connection-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+        }
+        
+        .connection-relation {
+            background: #8b4c6b;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .connection-name {
+            font-weight: 600;
+        }
+        
+        /* Herr family highlight */
+        .herr-highlight {
+            background: linear-gradient(135deg, #fff8e1, #e3f2fd);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #8b4c6b;
+        }
+        
+        .herr-highlight h3 {
+            color: #8b4c6b;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="timeline.html" class="nav-button">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>👩 Elizabeth Jane Herr</h3>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#herr-family">Herr Family Line</a></li>
+                <li><a href="#marriage">Marriage to Abel</a></li>
+                <li><a href="#family">Family</a></li>
+                <li><a href="#timeline">Timeline</a></li>
+                <li><a href="#documents">Documents</a></li>
+            </ul>
+
+            <h3>👨‍👩‍👧‍👦 Family Members</h3>
+            <ul>
+                <li><a href="abel_north.html">Abel North (Husband)</a></li>
+                <li><a href="birdie_musette_north.html">Birdie Musette North</a></li>
+                <li><a href="charles_lyman_north.html">Charles Lyman North</a></li>
+                <li><a href="cora_barbara_north.html">Cora Barbara North</a></li>
+                <li><a href="lucy_jane_north.html">Lucy Jane North</a></li>
+                <li><a href="mary_francis_north.html">Mary Francis North</a></li>
+                <li><a href="william_franklin_north.html">William Franklin North</a></li>
+            </ul>
+
+            <h3>📋 Related Pages</h3>
+            <ul>
+                <li><a href="herr_family_history.html">Herr Family History</a></li>
+                <li><a href="champaign_county_ohio.html">Champaign County, Ohio</a></li>
+                <li><a href="family_portraits.html">Family Portraits</a></li>
+                <li><a href="timeline_overview.html">Family Timeline</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="person-profile" id="overview">
+                <img src="extracted/Elizabeth%20Jane%20Herr.JPG" alt="Elizabeth Jane Herr North" class="profile-image">
+                <div class="profile-info">
+                    <h2>👩 Elizabeth Jane Herr North</h2>
+                    <p><strong>Matriarch of the Ohio North Family Line</strong></p>
+                    <p>Wife of Abel North and mother to the next generation. Her marriage to Abel established the union of the North and Herr family lines, creating the foundation for the Ohio branch of the North family.</p>
+                </div>
+            </div>
+
+            <div class="info-cards">
+                <div class="info-card">
+                    <h3>📅 Life Era</h3>
+                    <p>19th Century Pioneer<br>
+                    Active in Champaign County, Ohio<br>
+                    Timeline documentation preserved</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>👥 Family Role</h3>
+                    <p>Wife of Abel North<br>
+                    Mother of multiple children<br>
+                    Matriarch of Ohio branch</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>🏠 Family Lines</h3>
+                    <p>Born into the Herr family<br>
+                    United North and Herr lineages<br>
+                    Bridge between family histories</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>📋 Documentation</h3>
+                    <p>Timeline documents preserved<br>
+                    Family portraits available<br>
+                    Genealogical records maintained</p>
+                </div>
+            </div>
+
+            <div class="herr-highlight" id="herr-family">
+                <h3>🌸 The Herr Family Connection</h3>
+                <p>Elizabeth Jane Herr brought her own rich family heritage to her marriage with Abel North. The union of the North and Herr families created a powerful genealogical connection that strengthened both family lines.</p>
+                
+                <p>Her Herr family background added depth and diversity to the North family story, contributing additional historical documentation and family traditions that enriched the combined family heritage.</p>
+                
+                <p>The preservation of both North and Herr family names in genealogical records demonstrates the importance placed on maintaining connections to both family lines.</p>
+            </div>
+
+            <div class="content">
+                <h2 id="marriage">💑 Marriage to Abel North</h2>
+                <p>The marriage of Elizabeth Jane Herr to <a href="abel_north.html" class="wiki-link">Abel North</a> represents a pivotal moment in North family history. This union:</p>
+                <ul>
+                    <li><strong>Created the Ohio Branch</strong> - Their marriage established the foundation for the North family's significant presence in Champaign County, Ohio</li>
+                    <li><strong>United Two Family Lines</strong> - Combined the genealogical heritage of both the North and Herr families</li>
+                    <li><strong>Produced the Next Generation</strong> - Together they had multiple children who continued both family legacies</li>
+                    <li><strong>Generated Historical Documentation</strong> - Their union is well-preserved in family portraits, pedigree documents, and timeline records</li>
+                </ul>
+
+                <h2 id="family">👨‍👩‍👧‍👦 Children and Family</h2>
+                <p>Elizabeth Jane and Abel North raised a large family in Champaign County, Ohio. Their children included:</p>
+
+                <div class="family-connections">
+                    <h3>👶 Children</h3>
+                    <div class="connection-item">
+                        <div class="connection-relation">Daughter</div>
+                        <div class="connection-name"><a href="birdie_musette_north.html" class="wiki-link">Birdie Musette North Bryant</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Son</div>
+                        <div class="connection-name"><a href="charles_lyman_north.html" class="wiki-link">Charles Lyman North</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Daughter</div>
+                        <div class="connection-name"><a href="cora_barbara_north.html" class="wiki-link">Cora Barbara North</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Daughter</div>
+                        <div class="connection-name"><a href="lucy_jane_north.html" class="wiki-link">Lucy Jane North</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Daughter</div>
+                        <div class="connection-name"><a href="mary_francis_north.html" class="wiki-link">Mary Francis North</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Son</div>
+                        <div class="connection-name"><a href="william_franklin_north.html" class="wiki-link">William Franklin North (1870-1933)</a></div>
+                    </div>
+                    <div class="connection-item">
+                        <div class="connection-relation">Son</div>
+                        <div class="connection-name"><a href="wilber_arthur_north.html" class="wiki-link">Wilber Arthur North</a></div>
+                    </div>
+                </div>
+
+                <h2 id="timeline">📅 Life Timeline</h2>
+                <p>Elizabeth Jane Herr's timeline documentation provides insights into her life and the life of a 19th-century pioneer woman:</p>
+
+                <ul>
+                    <li><strong>Early Life</strong> - Born into the Herr family with its own rich heritage and traditions</li>
+                    <li><strong>Marriage</strong> - Union with Abel North, establishing the combined family legacy</li>
+                    <li><strong>Settlement</strong> - Life in Champaign County, Ohio as a pioneer wife and mother</li>
+                    <li><strong>Family Life</strong> - Raising multiple children and managing the household</li>
+                    <li><strong>Community Role</strong> - Contributing to the growth and development of the Ohio community</li>
+                    <li><strong>Legacy</strong> - Her influence continuing through her children and their descendants</li>
+                </ul>
+
+                <h2 id="documents">📋 Historical Documentation</h2>
+                <p>Elizabeth Jane Herr North's life is preserved through several important historical documents:</p>
+                <ul>
+                    <li><strong><a href="timeline_overview.html" class="wiki-link">Elizabeth Jane Herr Timeline</a></strong> - Visual chronology of her life events and milestones</li>
+                    <li><strong><a href="family_portraits.html" class="wiki-link">Family Portraits</a></strong> - Photographs showing Elizabeth Jane with the family</li>
+                    <li><strong><a href="genealogy_records.html" class="wiki-link">Pedigree Views to Abel North and Elizabeth Jayne Herr</a></strong> - Genealogical documentation showing both family lines</li>
+                    <li><strong><a href="biographical_sketches.html" class="wiki-link">Family Biographical Materials</a></strong> - Documents that reference her role in the family</li>
+                </ul>
+
+                <h2>🏛️ Historical Significance</h2>
+                <p>Elizabeth Jane Herr North holds a unique position in North family genealogy as the bridge between two important family lines. Her marriage to <a href="abel_north.html" class="wiki-link">Abel North</a> created the foundation for one of the most well-documented branches of the North family tree.</p>
+
+                <p>As the matriarch of the Ohio North family line, Elizabeth Jane's influence extended beyond her immediate family to help establish the family's significant presence in Champaign County. Her children carried forward both the North and Herr family legacies, creating a rich tapestry of family history.</p>
+
+                <p>The extensive timeline documentation and family portraits that include Elizabeth Jane demonstrate her importance to the family's historical preservation efforts. Her story represents the vital role that women played in 19th-century pioneer families and community building.</p>
+
+                <p>The union of North and Herr families through Elizabeth Jane's marriage created genealogical documentation that helps researchers understand the interconnected nature of pioneer families and their contributions to Ohio's development.</p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

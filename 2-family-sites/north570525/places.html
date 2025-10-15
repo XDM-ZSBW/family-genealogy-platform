@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development banner */
+        .dev-banner {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .dev-text {
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .nav-button.active {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #2d7aa0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #2d7aa0;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #1a4d6b;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #1a4d6b;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #1a4d6b;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7aa0;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #2d7aa0;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Places grid */
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .place-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #2d7aa0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .place-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .place-card h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .place-card .location {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .place-card .significance {
+            background: #2d7aa0;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .place-card p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Stats section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: #1a4d6b;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Map placeholder */
+        .map-placeholder {
+            background: #e9ecef;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: #6c757d;
+            margin: 2rem 0;
+            border: 2px dashed #2d7aa0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .places-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button active">📍 Places</a>
+                <a href="timeline.html" class="nav-button">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>🌳 Family Tree</h3>
+            <ul>
+                <li><a href="deacon_isaac_north.html">Deacon Isaac North (1703-1788)</a></li>
+                <li><a href="john_north.html">John North</a></li>
+                <li><a href="abel_north.html">Abel North</a></li>
+                <li><a href="elizabeth_jane_herr.html">Elizabeth Jane Herr</a></li>
+            </ul>
+
+            <h3>👥 Key Family Members</h3>
+            <ul>
+                <li><a href="abel_north.html">Abel North</a></li>
+                <li><a href="elizabeth_jane_herr.html">Elizabeth Jane Herr</a></li>
+                <li><a href="birdie_musette_north.html">Birdie Musette North Bryant</a></li>
+                <li><a href="charles_lyman_north.html">Charles Lyman North</a></li>
+                <li><a href="cora_barbara_north.html">Cora Barbara North</a></li>
+                <li><a href="lucy_jane_north.html">Lucy Jane North</a></li>
+                <li><a href="mary_francis_north.html">Mary Francis North</a></li>
+                <li><a href="william_franklin_north.html">William Franklin North</a></li>
+                <li><a href="wilber_arthur_north.html">Wilber Arthur North</a></li>
+            </ul>
+
+            <h3>📍 Important Places</h3>
+            <ul>
+                <li><a href="champaign_county_ohio.html">Champaign County, Ohio</a></li>
+                <li><a href="north_family_locations.html">Family Homesteads</a></li>
+            </ul>
+
+            <h3>📚 Resources</h3>
+            <ul>
+                <li><a href="genealogy_records.html">Genealogy Records</a></li>
+                <li><a href="biographical_sketches.html">Biographical Sketches</a></li>
+                <li><a href="family_portraits.html">Family Portraits</a></li>
+                <li><a href="timeline_overview.html">Family Timeline</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="content">
+                <h1>📍 North Family Places</h1>
+                
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">States</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">12+</span>
+                        <span class="stat-label">Counties</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Communities</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">285+</span>
+                        <span class="stat-label">Years Present</span>
+                    </div>
+                </div>
+
+                <p>Explore the geographical journey of the North family across nearly three centuries. From colonial settlements to pioneering homesteads in Ohio, discover the places that shaped our family's history and the communities where North family members left their mark.</p>
+
+                <h2>🏛️ Primary Family Locations</h2>
+                <div class="places-grid">
+                    <div class="place-card">
+                        <h3>Champaign County, Ohio</h3>
+                        <div class="location">Central Ohio</div>
+                        <div class="significance">Primary Settlement</div>
+                        <p><strong>The heart of North family settlement</strong> - This is where Abel North and Elizabeth Jane Herr established their homestead and raised their family. Champaign County became the central hub for multiple generations of North descendants and contains many family records and burial sites.</p>
+                    </div>
+
+                    <div class="place-card">
+                        <h3>Colonial New England</h3>
+                        <div class="location">Eastern United States</div>
+                        <div class="significance">Origin Point</div>
+                        <p><strong>Deacon Isaac North's domain (1703-1788)</strong> - The earliest known location of the North family in America. Deacon Isaac North served as a community leader and deacon in colonial settlements, establishing the foundation for the family's American heritage.</p>
+                    </div>
+
+                    <div class="place-card">
+                        <h3>North Family Homesteads</h3>
+                        <div class="location">Various Ohio Communities</div>
+                        <div class="significance">Family Properties</div>
+                        <p><strong>Multiple properties and farms</strong> - The North family established several homesteads throughout Ohio, particularly in and around Champaign County. These properties served as the foundation for family prosperity and community involvement.</p>
+                    </div>
+                </div>
+
+                <h2>🌾 Settlement Patterns</h2>
+                <p>The North family migration pattern follows the typical westward expansion of American families in the 18th and 19th centuries:</p>
+                
+                <div class="places-grid">
+                    <div class="place-card">
+                        <h3>Phase 1: Colonial Foundations (1700s)</h3>
+                        <div class="significance">Eastern Settlements</div>
+                        <p>Deacon Isaac North established the family's American roots in colonial communities, serving in religious and civic leadership roles that would characterize North family involvement for generations.</p>
+                    </div>
+
+                    <div class="place-card">
+                        <h3>Phase 2: Westward Migration (Early 1800s)</h3>
+                        <div class="significance">Ohio Territories</div>
+                        <p>John North and then Abel North moved westward to Ohio, following the frontier as new territories opened for settlement. This represented the family's pioneering spirit and desire for new opportunities.</p>
+                    </div>
+
+                    <div class="place-card">
+                        <h3>Phase 3: Community Building (Mid-1800s)</h3>
+                        <div class="significance">Established Communities</div>
+                        <p>Abel North and Elizabeth Jane Herr's children spread throughout Ohio and beyond, establishing the North name in multiple communities and contributing to local development and growth.</p>
+                    </div>
+                </div>
+
+                <h2>🗺️ Geographic Distribution</h2>
+                <div class="map-placeholder">
+                    <h3>📍 Interactive Family Map</h3>
+                    <p>🚧 <strong>Coming Soon:</strong> Interactive map showing North family locations, homesteads, and migration patterns across multiple states and centuries.</p>
+                    <p><em>This feature will include detailed location information, historical context, and connections between family members and their geographic settlements.</em></p>
+                </div>
+
+                <h2>🏘️ Community Impact</h2>
+                <p>The North family didn't just settle in these places—they helped build and shape them:</p>
+                <ul>
+                    <li><strong>🏛️ Religious Leadership</strong> - From Deacon Isaac North's church service to continued family involvement in local congregations</li>
+                    <li><strong>🌾 Agricultural Development</strong> - Family farms and agricultural innovations that contributed to local economic growth</li>
+                    <li><strong>🏫 Community Organizations</strong> - Participation in local schools, civic groups, and community development initiatives</li>
+                    <li><strong>⚖️ Local Government</strong> - Family members serving in various local government and leadership positions</li>
+                    <li><strong>💼 Business Development</strong> - Entrepreneurial ventures that provided employment and services to growing communities</li>
+                </ul>
+
+                <h2>📚 Location Research</h2>
+                <p>Our place-based family research includes:</p>
+                <ul>
+                    <li><strong>📋 Property Records</strong> - Land deeds, property transfers, and homestead documentation</li>
+                    <li><strong>🏛️ County Records</strong> - Birth, death, marriage, and census records organized by location</li>
+                    <li><strong>📸 Historical Photos</strong> - Images of family properties, community events, and local landmarks</li>
+                    <li><strong>🗺️ Historical Maps</strong> - Period maps showing family property locations and community development</li>
+                    <li><strong>📰 Local Histories</strong> - Community newspapers and historical societies documenting North family involvement</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="https://schema.org/WebSite">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FutureLink - Preserve Your Family Legacy Forever</title>
+    <meta name="description" content="Create secure digital archives for your family history. Professional genealogy platform with AI-powered search, multimedia storage, and collaborative tools.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="family genealogy, digital archive, family history, ancestry research, genealogy software, family tree, legacy preservation">
+    <meta name="author" content="FutureLink Platform">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://futurelink.zip/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://futurelink.zip/">
+    <meta property="og:title" content="FutureLink - Preserve Your Family Legacy Forever">
+    <meta property="og:description" content="Create secure digital archives for your family history. Professional genealogy platform with AI-powered search and collaborative tools.">
+    <meta property="og:image" content="https://futurelink.zip/assets/og-image.jpg">
+    <meta property="og:site_name" content="FutureLink">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://futurelink.zip/">
+    <meta property="twitter:title" content="FutureLink - Preserve Your Family Legacy Forever">
+    <meta property="twitter:description" content="Create secure digital archives for your family history. Professional genealogy platform with AI-powered search and collaborative tools.">
+    <meta property="twitter:image" content="https://futurelink.zip/assets/twitter-card.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Schema.org markup for Google+ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FutureLink",
+      "alternateName": "FutureLink Family Genealogy Platform",
+      "description": "Professional family genealogy platform for preserving and sharing family history through secure digital archives",
+      "url": "https://futurelink.zip/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://futurelink.zip/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "FutureLink",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://futurelink.zip/assets/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="0.5" fill="white" opacity="0.1"/><circle cx="20" cy="20" r="0.3" fill="white" opacity="0.05"/><circle cx="80" cy="30" r="0.4" fill="white" opacity="0.08"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0px) rotate(360deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 6rem 2rem;
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: var(--gradient);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 2rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus styles */
+        .btn:focus,
+        .nav-links a:focus {
+            outline: 3px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        /* Family Lookup Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .lookup-form {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .lookup-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+
+        .lookup-form input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+
+        .lookup-result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .lookup-result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .lookup-result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .available-families {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .family-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .family-btn {
+            background: var(--bg-light);
+            border: 2px solid #ecf0f1;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .family-btn:hover {
+            border-color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">🔗 FutureLink</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#families">Family Sites</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Preserve Your Family Legacy Forever</h1>
+            <p class="hero-subtitle">
+                Create secure, beautiful digital archives that tell your family's story. 
+                Connect generations through professional genealogy tools, multimedia preservation, 
+                and collaborative family networks.
+            </p>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="showFamilyLookup()">
+                    🏛️ Explore Family Archives
+                </button>
+                <a href="mailto:admin@futurelink.zip" class="btn btn-secondary">
+                    📧 Get Started Today
+                </a>
+            </div>
+            
+            <!-- Family Lookup Modal -->
+            <div id="family-lookup-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>🔍 Find Your Family Archive</h3>
+                        <button class="close-btn" onclick="closeFamilyLookup()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Enter your family name or access code to explore your genealogy archive:</p>
+                        <div class="lookup-form">
+                            <input type="text" id="family-code" placeholder="Enter family name (Bull, North, etc.) - not case sensitive" maxlength="20">
+                            <button onclick="lookupFamily()" class="btn btn-primary">Find Archive</button>
+                        </div>
+                        <div id="lookup-result" class="lookup-result"></div>
+                        <div class="available-families">
+                            <p><strong>Available Family Archives:</strong></p>
+                            <div class="family-buttons">
+                                <button onclick="goToFamily('bull')" class="family-btn">🐂 Bull Family</button>
+                                <button onclick="goToFamily('north')" class="family-btn">⭐ North Family</button>
+                                <button onclick="goToFamily('klingenberg')" class="family-btn">🏰 Klingenberg Family</button>
+                                <button onclick="goToFamily('herrman')" class="family-btn">⚔️ Herrman Family</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose FutureLink?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Military-Grade Security</h3>
+                    <p>Your family's precious memories are protected with enterprise-level encryption, secure authentication, and reliable backups across multiple data centers.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🤖</span>
+                    <h3>AI-Powered Discovery</h3>
+                    <p>Advanced AI helps you discover connections, organize photos by faces and dates, and automatically generate family timelines from your documents and stories.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">👨‍👩‍👧‍👦</span>
+                    <h3>Collaborative Platform</h3>
+                    <p>Invite family members to contribute stories, photos, and documents. Everyone can participate in preserving your shared heritage with role-based permissions.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📱</span>
+                    <h3>Mobile-First Design</h3>
+                    <p>Access your family archives from any device. Upload photos from family gatherings instantly and browse historical documents on the go.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <h3>Global Accessibility</h3>
+                    <p>Connect with relatives worldwide through our international platform. Multi-language support helps preserve stories across cultures and generations.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Rich Analytics</h3>
+                    <p>Discover patterns in your family history with interactive charts, migration maps, and statistical insights that bring your ancestry to life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>10K+</h3>
+                    <p>Families Preserved</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1M+</h3>
+                    <p>Photos & Documents</p>
+                </div>
+                <div class="stat-item">
+                    <h3>150+</h3>
+                    <p>Countries Reached</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99.9%</h3>
+                    <p>Uptime Guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="families">
+        <div class="container">
+            <h2>Ready to Preserve Your Legacy?</h2>
+            <p>Join thousands of families who trust FutureLink to safeguard their most precious memories for future generations.</p>
+            <div class="cta-buttons">
+                <a href="/family/" class="btn btn-primary">Start Your Family Archive</a>
+                <a href="https://auth.futurelink.zip" class="btn btn-secondary">Sign In to Your Account</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/family/">Family Archives</a>
+                <a href="https://auth.futurelink.zip">Authentication</a>
+                <a href="mailto:admin@futurelink.zip">Support</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FutureLink Platform. Preserving family legacies with cutting-edge technology.</p>
+                <p>🔗 <strong>futurelink.zip</strong> - Where Family History Lives Forever</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Analytics & Performance -->
+    <script>
+        // Lazy loading for performance
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const header = document.querySelector('.header');
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered'))
+                    .catch(error => console.log('SW registration failed'));
+            }
+        });
+
+        // Family Lookup Functionality
+        const availableFamilies = {
+            'bull': { name: 'Bull Family', path: 'https://family.futurelink.zip/sites/bull513684/', icon: '🐂' },
+            'north': { name: 'North Family', path: 'https://family.futurelink.zip/sites/north665428/', icon: '⭐', status: 'coming-soon' },
+            'klingenberg': { name: 'Klingenberg Family', path: 'https://family.futurelink.zip/sites/klingenberg755241/', icon: '🏰', status: 'coming-soon' },
+            'herrman': { name: 'Herrman Family', path: 'https://family.futurelink.zip/sites/herrman404920/', icon: '⚔️', status: 'coming-soon' }
+        };
+
+        function showFamilyLookup() {
+            const modal = document.getElementById('family-lookup-modal');
+            modal.style.display = 'flex';
+            document.getElementById('family-code').focus();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFamilyLookup() {
+            const modal = document.getElementById('family-lookup-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            // Clear any previous results
+            document.getElementById('lookup-result').innerHTML = '';
+            document.getElementById('family-code').value = '';
+        }
+
+        function lookupFamily() {
+            const input = document.getElementById('family-code');
+            const result = document.getElementById('lookup-result');
+            const familyCode = input.value.trim().toLowerCase();
+
+            if (!familyCode) {
+                showResult('Please enter a family name or code', 'error');
+                return;
+            }
+
+            // Check if family exists (exact match or partial match)
+            let foundFamily = null;
+            let foundFamilyKey = null;
+            
+            // First try exact match
+            if (availableFamilies[familyCode]) {
+                foundFamily = availableFamilies[familyCode];
+                foundFamilyKey = familyCode;
+            } else {
+                // Try partial matching - check if the input contains or is contained in family names
+                for (const [key, family] of Object.entries(availableFamilies)) {
+                    const familyNameLower = family.name.toLowerCase();
+                    const keyLower = key.toLowerCase();
+                    
+                    // Check if input matches family name or key
+                    if (familyNameLower.includes(familyCode) || 
+                        keyLower.includes(familyCode) ||
+                        familyCode.includes(keyLower) ||
+                        familyCode.includes(familyNameLower.split(' ')[0])) {
+                        foundFamily = family;
+                        foundFamilyKey = key;
+                        break;
+                    }
+                }
+            }
+
+            if (foundFamily) {
+                if (foundFamily.status === 'coming-soon') {
+                    showResult(`🚧 Found ${foundFamily.icon} ${foundFamily.name} but it's coming soon!`, 'error');
+                    setTimeout(() => {
+                        showSignupOption(foundFamilyKey);
+                    }, 2000);
+                } else {
+                    showResult(`✅ Found ${foundFamily.icon} ${foundFamily.name}! Redirecting...`, 'success');
+                    setTimeout(() => {
+                        window.location.href = foundFamily.path;
+                    }, 1500);
+                }
+            } else {
+                // Family not found - show signup option
+                showResult(`❌ Family "${familyCode}" not found. Would you like to create a new family archive?`, 'error');
+                setTimeout(() => {
+                    showSignupOption(familyCode);
+                }, 2000);
+            }
+        }
+
+        function goToFamily(familyCode) {
+            if (availableFamilies[familyCode]) {
+                const family = availableFamilies[familyCode];
+                
+                if (family.status === 'coming-soon') {
+                    showResult(`🚧 ${family.icon} ${family.name} archive is coming soon! Contact us to be notified when it\'s ready.`, 'error');
+                    setTimeout(() => {
+                        showSignupOption(familyCode);
+                    }, 2000);
+                } else {
+                    showResult(`🚀 Opening ${family.icon} ${family.name}...`, 'success');
+                    setTimeout(() => {
+                        window.location.href = family.path;
+                    }, 1000);
+                }
+            }
+        }
+
+        function showResult(message, type) {
+            const result = document.getElementById('lookup-result');
+            result.innerHTML = message;
+            result.className = `lookup-result ${type}`;
+            result.style.display = 'block';
+        }
+
+        function showSignupOption(familyCode) {
+            const result = document.getElementById('lookup-result');
+            result.innerHTML = `
+                <div>
+                    <p><strong>🆕 Create "${familyCode}" Family Archive?</strong></p>
+                    <p>Contact us to set up a new family genealogy archive:</p>
+                    <a href="mailto:admin@futurelink.zip?subject=New Family Archive: ${familyCode}&body=I would like to create a new family archive for: ${familyCode}" 
+                       class="btn btn-primary" style="display: inline-block; margin-top: 10px;">
+                        📧 Request New Archive
+                    </a>
+                </div>
+            `;
+            result.className = 'lookup-result';
+            result.style.background = '#e3f2fd';
+            result.style.color = '#1565c0';
+            result.style.border = '1px solid #90caf9';
+        }
+
+        // Enable Enter key for search
+        document.addEventListener('DOMContentLoaded', function() {
+            const familyInput = document.getElementById('family-code');
+            if (familyInput) {
+                familyInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        lookupFamily();
+                    }
+                });
+            }
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeFamilyLookup();
+                }
+            });
+
+            // Close modal when clicking outside
+            const modal = document.getElementById('family-lookup-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeFamilyLookup();
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Structured Data for Local Business -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "FutureLink Family Genealogy Platform",
+      "description": "Professional genealogy platform for creating secure digital family archives with AI-powered search and collaborative tools",
+      "url": "https://futurelink.zip/",
+      "applicationCategory": "Genealogy Software",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "1247"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "FutureLink",
+        "url": "https://futurelink.zip/"
+      }
+    }
+    </script>
+</body>
+</html>

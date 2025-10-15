@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development Prototype Banner */
+        .dev-banner {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .dev-banner .dev-text {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .nav-button.active {
+            background: rgba(255,255,255,0.4);
+            font-weight: 600;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Content */
+        .content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #1a4d6b;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7aa0;
+            padding-left: 1rem;
+        }
+        
+        /* Timeline styles */
+        .timeline-intro {
+            background: linear-gradient(135deg, #e8f4f8, #d4edda);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .timeline-intro h2 {
+            color: #1a4d6b;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            border: none;
+            padding: 0;
+        }
+        
+        .timeline-intro p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline {
+            margin: 2rem 0;
+        }
+        
+        .timeline-period {
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-period h3 {
+            background: #1a4d6b;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #2d7aa0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .timeline-year {
+            background: #2d7aa0;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-right: 2rem;
+            min-width: 100px;
+            text-align: center;
+            height: fit-content;
+        }
+        
+        .timeline-content h4 {
+            color: #1a4d6b;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-people {
+            color: #2d7aa0;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .wiki-link {
+            color: #2d7aa0;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+            }
+            
+            .timeline-year {
+                margin-right: 0;
+                margin-bottom: 1rem;
+                width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="timeline.html" class="nav-button active">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="content">
+            <div class="timeline-intro">
+                <h2>📅 North Family Timeline</h2>
+                <p>A chronological journey through the North family history, documenting key events, milestones, and the lives of our ancestors from early America through the 19th century.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-period">
+                    <h3>Early Colonial Period (1700s)</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1703</div>
+                        <div class="timeline-content">
+                            <h4>Birth of Deacon Isaac North</h4>
+                            <p>Deacon Isaac North is born, establishing the earliest documented North family ancestor. He would become a prominent religious figure in the community.</p>
+                            <div class="timeline-people">Key figure: <a href="deacon_isaac_north.html" class="wiki-link">Deacon Isaac North</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1788</div>
+                        <div class="timeline-content">
+                            <h4>Death of Deacon Isaac North</h4>
+                            <p>Deacon Isaac North passes away, leaving behind a legacy of faith and family that would influence generations of North descendants.</p>
+                            <div class="timeline-people">Key figure: <a href="deacon_isaac_north.html" class="wiki-link">Deacon Isaac North (1703-1788)</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-period">
+                    <h3>19th Century Development</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">Early 1800s</div>
+                        <div class="timeline-content">
+                            <h4>Birth of Abel North</h4>
+                            <p>Abel North is born, destined to become the patriarch of the Ohio North family line and a central figure in North family genealogy.</p>
+                            <div class="timeline-people">Key figure: <a href="abel_north.html" class="wiki-link">Abel North</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">Mid 1800s</div>
+                        <div class="timeline-content">
+                            <h4>Marriage of Abel North and Elizabeth Jane Herr</h4>
+                            <p>Abel North marries Elizabeth Jane Herr, establishing the foundation of the Ohio North family branch. This union would produce several children and establish the family's presence in Champaign County, Ohio.</p>
+                            <div class="timeline-people">Key figures: <a href="abel_north.html" class="wiki-link">Abel North</a>, <a href="elizabeth_jane_herr.html" class="wiki-link">Elizabeth Jane Herr</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1850s-1860s</div>
+                        <div class="timeline-content">
+                            <h4>Settlement in Champaign County, Ohio</h4>
+                            <p>Abel North establishes roots in Champaign County, Ohio, becoming a landowner and community member. This location becomes central to North family history.</p>
+                            <div class="timeline-people">Key figure: <a href="abel_north.html" class="wiki-link">Abel North</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1870</div>
+                        <div class="timeline-content">
+                            <h4>Birth of William Franklin North</h4>
+                            <p>William Franklin North is born to Abel and Elizabeth Jane, continuing the North family line. He would live until 1933, spanning multiple generations.</p>
+                            <div class="timeline-people">Key figure: <a href="william_franklin_north.html" class="wiki-link">William Franklin North (1870-1933)</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">Late 1800s</div>
+                        <div class="timeline-content">
+                            <h4>Growing North Family</h4>
+                            <p>Abel and Elizabeth Jane raise their children: Birdie Musette, Charles Lyman, Cora Barbara, Lucy Jane, Mary Francis, William Franklin, and Wilber Arthur North, each contributing to their communities.</p>
+                            <div class="timeline-people">Family: <a href="abel_north.html" class="wiki-link">Abel North Family</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-period">
+                    <h3>20th Century Legacy</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1933</div>
+                        <div class="timeline-content">
+                            <h4>Death of William Franklin North</h4>
+                            <p>William Franklin North passes away at age 63, having witnessed the transition from the 19th to 20th century and contributing to the continuation of the North family legacy.</p>
+                            <div class="timeline-people">Key figure: <a href="william_franklin_north.html" class="wiki-link">William Franklin North (1870-1933)</a></div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">Modern Era</div>
+                        <div class="timeline-content">
+                            <h4>Family Documentation Project</h4>
+                            <p>Extensive documentation of North family history begins, including biographical sketches, family portraits, genealogical records, and timeline preservation for future generations.</p>
+                            <div class="timeline-people">Legacy: <a href="documents.html" class="wiki-link">Historical Documents</a>, <a href="photos.html" class="wiki-link">Family Photos</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🏛️ Historical Context</h2>
+            <p>The North family timeline spans crucial periods in American history, from the Colonial era through westward expansion and into the modern age. Each generation faced unique challenges and opportunities that shaped their contributions to American society.</p>
+
+            <p>The family's documentation through <a href="documents.html" class="wiki-link">biographical sketches</a>, <a href="photos.html" class="wiki-link">family portraits</a>, and genealogical records provides invaluable insights into 18th and 19th-century American family life, community involvement, and the pioneering spirit that characterized the nation's growth.</p>
+        </main>
+    </div>
+</body>
+</html>
