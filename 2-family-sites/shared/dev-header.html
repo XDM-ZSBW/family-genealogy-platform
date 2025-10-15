@@ -1,0 +1,71 @@
+<!-- Development Prototype Header -->
+<div id="dev-prototype-banner" style="
+    background: linear-gradient(135deg, #ff6b6b, #feca57);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+    border-bottom: 3px solid rgba(255,255,255,0.3);
+">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 15px;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 18px;">⚡</span>
+            <strong>DEVELOPMENT PROTOTYPE</strong>
+        </span>
+        <span style="opacity: 0.9; font-weight: 400;">
+            This is an early preview of the FutureLink Family Genealogy Platform
+        </span>
+        <a href="/" style="
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+            ← Back to Home
+        </a>
+    </div>
+</div>
+
+<script>
+// Add some interactive behavior
+document.addEventListener('DOMContentLoaded', function() {
+    const banner = document.getElementById('dev-prototype-banner');
+    
+    // Add a subtle animation
+    banner.style.animation = 'slideDown 0.5s ease-out';
+    
+    // Add the keyframe animation
+    if (!document.getElementById('dev-banner-styles')) {
+        const style = document.createElement('style');
+        style.id = 'dev-banner-styles';
+        style.textContent = `
+            @keyframes slideDown {
+                from { transform: translateY(-100%); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            
+            @media (max-width: 768px) {
+                #dev-prototype-banner {
+                    padding: 10px 15px;
+                    font-size: 13px;
+                }
+                #dev-prototype-banner > div {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+});
+</script>
