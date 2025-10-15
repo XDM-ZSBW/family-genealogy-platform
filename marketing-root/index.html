@@ -592,7 +592,7 @@
                     <div class="modal-body">
                         <p>Enter your family name or access code to explore your genealogy archive:</p>
                         <div class="lookup-form">
-                            <input type="text" id="family-code" placeholder="e.g., Bull, North, Klingenberg, Herrman" maxlength="20">
+                            <input type="text" id="family-code" placeholder="Enter family name (Bull, North, etc.) - not case sensitive" maxlength="20">
                             <button onclick="lookupFamily()" class="btn btn-primary">Find Archive</button>
                         </div>
                         <div id="lookup-result" class="lookup-result"></div>
@@ -790,19 +790,42 @@
                 return;
             }
 
-            // Check if family exists
+            // Check if family exists (exact match or partial match)
+            let foundFamily = null;
+            let foundFamilyKey = null;
+            
+            // First try exact match
             if (availableFamilies[familyCode]) {
-                const family = availableFamilies[familyCode];
-                
-                if (family.status === 'coming-soon') {
-                    showResult(`🚧 Found ${family.icon} ${family.name} but it\'s coming soon!`, 'error');
+                foundFamily = availableFamilies[familyCode];
+                foundFamilyKey = familyCode;
+            } else {
+                // Try partial matching - check if the input contains or is contained in family names
+                for (const [key, family] of Object.entries(availableFamilies)) {
+                    const familyNameLower = family.name.toLowerCase();
+                    const keyLower = key.toLowerCase();
+                    
+                    // Check if input matches family name or key
+                    if (familyNameLower.includes(familyCode) || 
+                        keyLower.includes(familyCode) ||
+                        familyCode.includes(keyLower) ||
+                        familyCode.includes(familyNameLower.split(' ')[0])) {
+                        foundFamily = family;
+                        foundFamilyKey = key;
+                        break;
+                    }
+                }
+            }
+
+            if (foundFamily) {
+                if (foundFamily.status === 'coming-soon') {
+                    showResult(`🚧 Found ${foundFamily.icon} ${foundFamily.name} but it's coming soon!`, 'error');
                     setTimeout(() => {
-                        showSignupOption(familyCode);
+                        showSignupOption(foundFamilyKey);
                     }, 2000);
                 } else {
-                    showResult(`✅ Found ${family.icon} ${family.name}! Redirecting...`, 'success');
+                    showResult(`✅ Found ${foundFamily.icon} ${foundFamily.name}! Redirecting...`, 'success');
                     setTimeout(() => {
-                        window.location.href = family.path;
+                        window.location.href = foundFamily.path;
                     }, 1500);
                 }
             } else {
