@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Access Gateway - FutureLink Genealogy</title>
+    <meta name="description" content="Secure access to your family genealogy archives. Login with Google to explore your family history.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Family Access Gateway - FutureLink Genealogy">
+    <meta property="og:description" content="Secure access to your family genealogy archives">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://family.futurelink.zip/family/">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .auth-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .auth-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+        }
+        
+        .auth-subtitle {
+            color: #718096;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        
+        .google-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        
+        .google-btn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
+            color: white;
+        }
+        
+        .google-icon {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .reason-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .reason-message.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .reason-message.info {
+            background: #bee3f8;
+            color: #2a69ac;
+        }
+        
+        .features {
+            text-align: left;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .features h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .feature-list {
+            list-style: none;
+            space-y: 0.5rem;
+        }
+        
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .footer-links {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin: 0 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-details {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        .error-details h4 {
+            color: #c53030;
+            margin-bottom: 0.5rem;
+        }
+        
+        .error-details code {
+            background: #f7fafc;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">🏛️</div>
+        <h1 class="auth-title">Family Access Gateway</h1>
+        <p class="auth-subtitle">Secure access to your family genealogy archives</p>
+        
+        <!-- Reason message (shown based on URL params) -->
+        <div id="reason-message" class="reason-message" style="display: none;"></div>
+        
+        <!-- Google Sign-In Button -->
+        <button id="google-signin-btn" class="google-btn">
+            <div class="google-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24">
+                    <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+            </div>
+            Continue with Google
+        </button>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 0.5rem; color: #718096;">Authenticating...</p>
+        </div>
+        
+        <div class="features">
+            <h3>What you'll get access to:</h3>
+            <ul class="feature-list">
+                <li>Complete family genealogy trees</li>
+                <li>Historical documents and photos</li>
+                <li>Interactive timeline exploration</li>
+                <li>Biographical sketches and stories</li>
+                <li>Family location maps and places</li>
+            </ul>
+        </div>
+        
+        <div class="footer-links">
+            <a href="/">← Back to Main Site</a>
+            <a href="mailto:support@futurelink.zip">Need Help?</a>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'https://api.futurelink.zip';
+        const GOOGLE_CLIENT_ID = ''; // Will be configured when backend is set up
+        
+        // Available family sites
+        const familySites = {
+            'north': '/sites/north570525/',
+            'bull': '/sites/bull683912/', 
+            'klingenberg': '/sites/klingenberg422679/',
+            'herrman': '/sites/herrman242585/'
+        };
+        
+        // Parse URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                reason: params.get('reason'),
+                family: params.get('family'),
+                redirect: params.get('redirect')
+            };
+        }
+        
+        // Show reason message
+        function showReasonMessage() {
+            const { reason } = getUrlParams();
+            const messageEl = document.getElementById('reason-message');
+            
+            const messages = {
+                'authentication_required': {
+                    text: '🔐 Authentication required to access family archives. Please sign in with Google to continue.',
+                    type: 'info'
+                },
+                'insufficient_access': {
+                    text: '⚠️ You don\'t have access to this family archive. Please contact the family administrator.',
+                    type: 'error'
+                },
+                'auth_error': {
+                    text: '❌ Authentication error occurred. Please try signing in again.',
+                    type: 'error'
+                },
+                'logged_out': {
+                    text: '✅ You have been successfully logged out.',
+                    type: 'success'
+                }
+            };
+            
+            if (reason && messages[reason]) {
+                messageEl.textContent = messages[reason].text;
+                messageEl.className = `reason-message ${messages[reason].type}`;
+                messageEl.style.display = 'block';
+            }
+        }
+        
+        // Handle Google Sign-In
+        async function handleGoogleSignIn() {
+            const signInBtn = document.getElementById('google-signin-btn');
+            const loading = document.getElementById('loading');
+            
+            signInBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            try {
+                // For now, redirect to Google OAuth (will be configured with backend)
+                // In production, this would use proper OAuth flow
+                showError('Backend Authentication Setup Required', 
+                    'The authentication system is not yet configured. Please contact the administrator to set up:\n' +
+                    '• Google OAuth Client ID\n' +
+                    '• API backend at api.futurelink.zip\n' +
+                    '• SSL certificates\n\n' +
+                    'For development, family sites are temporarily accessible without authentication.'
+                );
+                
+                // For development - allow direct access after 3 seconds
+                setTimeout(() => {
+                    const { redirect } = getUrlParams();
+                    if (redirect) {
+                        window.location.href = redirect;
+                    } else {
+                        // Show family selection
+                        showFamilySelection();
+                    }
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Authentication error:', error);
+                showError('Authentication Failed', 'Unable to authenticate with Google. Please try again.');
+            }
+        }
+        
+        // Show error message
+        function showError(title, message) {
+            const errorEl = document.createElement('div');
+            errorEl.className = 'error-details';
+            errorEl.innerHTML = `
+                <h4>${title}</h4>
+                <p style="white-space: pre-line;">${message}</p>
+                <button onclick="location.reload()" style="margin-top: 1rem; background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Retry</button>
+            `;
+            
+            const loading = document.getElementById('loading');
+            loading.style.display = 'none';
+            loading.parentNode.insertBefore(errorEl, loading.nextSibling);
+        }
+        
+        // Show family selection (for development)
+        function showFamilySelection() {
+            const container = document.querySelector('.auth-container');
+            container.innerHTML = `
+                <div class="logo">🏛️</div>
+                <h1 class="auth-title">Select Your Family</h1>
+                <p class="auth-subtitle">Choose your family archive to explore</p>
+                
+                <div style="display: grid; gap: 1rem; margin: 2rem 0;">
+                    ${Object.entries(familySites).map(([family, path]) => `
+                        <a href="${path}" style="
+                            display: flex;
+                            align-items: center;
+                            gap: 1rem;
+                            background: #f7fafc;
+                            padding: 1rem;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            color: #2d3748;
+                            border: 2px solid #e2e8f0;
+                            transition: all 0.3s;
+                        " onmouseover="this.style.borderColor='#667eea'; this.style.background='#edf2f7';" onmouseout="this.style.borderColor='#e2e8f0'; this.style.background='#f7fafc';">
+                            <div style="font-size: 1.5rem;">👨‍👩‍👧‍👦</div>
+                            <div>
+                                <div style="font-weight: 600; text-transform: capitalize;">${family} Family</div>
+                                <div style="font-size: 0.85rem; color: #718096;">Genealogy Archive</div>
+                            </div>
+                        </a>
+                    `).join('')}
+                </div>
+                
+                <div class="footer-links">
+                    <a href="/">← Back to Main Site</a>
+                    <a href="mailto:support@futurelink.zip">Need Help?</a>
+                </div>
+            `;
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            showReasonMessage();
+            
+            // Add click handler to Google sign-in button
+            document.getElementById('google-signin-btn').addEventListener('click', handleGoogleSignIn);
+        });
+        
+        // Check if user is already authenticated
+        async function checkExistingAuth() {
+            try {
+                const response = await fetch(`${API_BASE}/me`, {
+                    credentials: 'include'
+                });
+                
+                if (response.ok) {
+                    const userData = await response.json();
+                    // User is already authenticated, redirect to appropriate family site
+                    if (userData.families && userData.families.length > 0) {
+                        const firstFamily = userData.families[0];
+                        if (familySites[firstFamily]) {
+                            window.location.href = familySites[firstFamily];
+                            return;
+                        }
+                    }
+                    showFamilySelection();
+                }
+            } catch (error) {
+                // API not available, continue with login flow
+                console.log('API not available for auth check');
+            }
+        }
+        
+        // Check auth on page load
+        // checkExistingAuth();
+    </script>
+</body>
+</html>
