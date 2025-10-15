@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gladys Folder - Refactoring Index - Gladys Klingenberg's Life Story Wiki</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #3498db;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Wiki links */
+        .wiki-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Images */
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .image-item {
+            text-align: center;
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .image-item img:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-item a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation footer */
+        .nav-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .nav-section h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-section ul {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .nav-section li {
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Search box */
+        .search-box {
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            background: #ecf0f1;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumbs-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumbs a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .header, .sidebar, .nav-footer {
+                display: none;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .main-content {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Gladys Klingenberg's Life Story Wiki</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👥 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="images.html" class="nav-button">🖼️ Images</a>
+                <a href="graph.html" class="nav-button">🕸️ Graph</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="index.html">Home</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search wiki..." onkeyup="searchWiki(this.value)">
+            </div>
+            
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="index.html">🏠 Wiki Home</a></li>
+                <li><a href="people.html">👥 All People (16)</a></li>
+                <li><a href="places.html">📍 All Places (17)</a></li>
+                <li><a href="images.html">🖼️ All Images (306)</a></li>
+                <li><a href="graph.html">🕸️ Relationship Graph</a></li>
+            </ul>
+            
+            <h3>Key People</h3>
+            <ul>
+                <li><a href="people/gladys_klingenberg.html">Gladys Klingenberg</a></li>
+                <li><a href="people/tom_herrman.html">Tom Herrman</a></li>
+                <li><a href="people/bryant_herrman.html">Bryant Herrman</a></li>
+                <li><a href="people/mary_safrona.html">Mary Safrona</a></li>
+            </ul>
+            
+            <h3>Notable Places</h3>
+            <ul>
+                <li><a href="places/family_farm.html">Family Farm</a></li>
+                <li><a href="places/lutheran_church.html">Lutheran Church</a></li>
+                <li><a href="places/minnesota.html">Minnesota</a></li>
+                <li><a href="places/chicago.html">Chicago</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="content">
+                <h1>Gladys Folder - Refactoring Index</h1>
+<p><em>Comprehensive structural analysis and refactoring guide for the Gladys Klingenberg memoir wiki system</em></p>
+<p><strong>Generated:</strong> October 14, 2025<br />
+<strong>Purpose:</strong> Document current structure, identify patterns, and guide refactoring efforts</p>
+<hr />
+<h2>📁 Folder Structure Overview</h2>
+<pre><code>Gladys/
+├── Gladys_Life_Index.md          # Main index file with people/places/themes
+├── MyLifeStoryGladys Klingenberg.pdf  # Source PDF memoir
+├── images/                        # Extracted images from PDF (806 PNG files)
+│   └── page_N_img_M.png          # Naming pattern: page number + image index
+└── s_letter/                      # Wiki structure (mirroring Scarlet Letter format)
+    ├── README.md                  # Wiki homepage with navigation
+    ├── index/                     # Category index pages
+    │   └── people.md              # Index of all people
+    ├── people/                    # Individual person pages (16 people)
+    │   ├── annie.md
+    │   ├── bertha.md
+    │   ├── bryant_herrman.md
+    │   ├── elmira.md
+    │   ├── gladys_klingenberg.md
+    │   ├── jeanne.md
+    │   ├── john.md
+    │   ├── lona.md
+    │   ├── mary_safrona.md
+    │   ├── mary.md
+    │   ├── myrtle.md
+    │   ├── paul.md
+    │   ├── safrona.md
+    │   ├── tom_herrman.md
+    │   ├── willie_elmira.md
+    │   └── willie.md
+    ├── places/                    # Place pages (currently empty)
+    ├── themes/                    # Theme pages (currently empty)
+    └── images/                    # Image context pages (806 MD files)
+        └── page_N_img_M.md       # Corresponding markdown for each image
+</code></pre>
+<hr />
+<h2>📊 Content Statistics</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>People</strong></td>
+<td>16</td>
+<td>✅ Complete</td>
+</tr>
+<tr>
+<td><strong>Places</strong></td>
+<td>0</td>
+<td>⚠️ Empty</td>
+</tr>
+<tr>
+<td><strong>Themes</strong></td>
+<td>0</td>
+<td>⚠️ Empty</td>
+</tr>
+<tr>
+<td><strong>Images (PNG)</strong></td>
+<td>806</td>
+<td>✅ Extracted</td>
+</tr>
+<tr>
+<td><strong>Image Pages (MD)</strong></td>
+<td>806</td>
+<td>✅ Generated</td>
+</tr>
+<tr>
+<td><strong>PDF Pages</strong></td>
+<td>~250+</td>
+<td>📄 Source</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎭 People Catalog</h2>
+<h3>Primary Subjects</h3>
+<ol>
+<li><strong>Gladys Klingenberg</strong> - Main subject (pages: 1, 2, 3, 4, 5)</li>
+<li><strong>Tom Herrman</strong> - Family member (pages: 1, 50, 100, 150)</li>
+<li><strong>Bryant Herrman</strong> - Family member (pages: 1, 75, 125, 175)</li>
+</ol>
+<h3>Supporting Cast</h3>
+<ol>
+<li><strong>Paul</strong> (pages: 1, 25, 75, 125)</li>
+<li><strong>John</strong> (pages: 1, 30, 80, 130)</li>
+<li><strong>Jeanne</strong> (pages: 1, 40, 90, 140)</li>
+</ol>
+<h3>Family Members (Page 13 group)</h3>
+<ol>
+<li><strong>Annie</strong> (page: 13)</li>
+<li><strong>Bertha</strong> (page: 13)</li>
+<li><strong>Elmira</strong> (page: 13)</li>
+<li><strong>Lona</strong> (page: 13)</li>
+<li><strong>Mary</strong> (page: 13)</li>
+<li><strong>Mary Safrona</strong> (page: 13)</li>
+<li><strong>Myrtle</strong> (page: 13)</li>
+<li><strong>Safrona</strong> (page: 13)</li>
+<li><strong>Willie</strong> (page: 13)</li>
+<li><strong>Willie Elmira</strong> (page: 13)</li>
+</ol>
+<hr />
+<h2>🔗 Naming Conventions</h2>
+<h3>File Naming Patterns</h3>
+<ul>
+<li><strong>People:</strong> <code>firstname_lastname.md</code> or <code>firstname.md</code></li>
+<li>Example: <code>gladys_klingenberg.md</code>, <code>annie.md</code></li>
+<li>Lowercase with underscores</li>
+<li>
+<p>No special characters (periods, commas removed)</p>
+</li>
+<li>
+<p><strong>Images:</strong> <code>page_N_img_M.png</code> and <code>page_N_img_M.md</code></p>
+</li>
+<li>N = page number (1-indexed)</li>
+<li>M = image index on that page (1-indexed)</li>
+<li>Example: <code>page_13_img_1.png</code></li>
+</ul>
+<h3>Wikilink Patterns</h3>
+<ul>
+<li><strong>Internal links:</strong> <code><a href="path_file.html" class="wiki-link">Display Name</a></code></li>
+<li><strong>People links:</strong> <code><a href="s_letter_people_person_name.html" class="wiki-link">Person Name</a></code></li>
+<li><strong>Image links:</strong> <code><a href="images_page_n_img_m.html" class="wiki-link">Image from Page N</a></code></li>
+<li><strong>Navigation links:</strong> <code><a href="readme.html" class="wiki-link">Wiki Home</a></code></li>
+</ul>
+<hr />
+<h2>📝 Document Templates</h2>
+<h3>Person Page Template</h3>
+<pre><code class="language-markdown"># [Person Name]
+
+## About
+[Brief description or role]
+
+## Mentions in the Memoir
+**Page N:** [Context or quote]
+[Multiple page entries...]
+
+## Related Images
+- <a href="images_page_n_img_m.html" class="wiki-link">Image from Page N</a>
+[More image links...]
+
+## Related People
+- <a href="person_name.html" class="wiki-link">Person Name</a>
+[More related people...]
+
+## Page References
+Mentioned on pages: N, N, N...
+
+---
+
+**Navigation:**
+- <a href="readme.html" class="wiki-link">Wiki Home</a>
+- <a href="index_people.html" class="wiki-link">People Index</a>
+- <a href="gladys_life_index.html" class="wiki-link">Main Index</a>
+</code></pre>
+<h3>Image Page Template</h3>
+<pre><code class="language-markdown"># Image from Page N
+
+**Filename:** page_N_img_M.png
+**Source Page:** N
+
+## Context
+[Text context from that page]
+
+![Image from page N](../images/page_N_img_M.png)
+
+---
+
+**Navigation:**
+- <a href="readme.html" class="wiki-link">Wiki Home</a>
+- <a href="gladys_life_index.html" class="wiki-link">Main Index</a>
+</code></pre>
+<hr />
+<h2>🔄 Generation Scripts</h2>
+<h3>Primary Scripts</h3>
+<ol>
+<li><strong>create_pdf_wiki.py</strong> - Main PDF processing and wiki generation</li>
+<li>Extracts text and images from PDF</li>
+<li>Identifies entities (people, places, themes)</li>
+<li>Creates wiki structure</li>
+<li>
+<p>Generates all markdown files</p>
+</li>
+<li>
+<p><strong>ocr_entity_extraction.py</strong> - OCR-based entity extraction</p>
+</li>
+<li>Uses PyMuPDF, Tesseract, or EasyOCR</li>
+<li>Extracts text from image-based PDFs</li>
+<li>Identifies people names</li>
+<li>
+<p>Complements PDF text extraction</p>
+</li>
+<li>
+<p><strong>update_wiki_with_all_people.py</strong> - Updates wiki with new people</p>
+</li>
+<li>Adds missing people to existing wiki</li>
+<li>Updates indexes</li>
+<li>Maintains consistency</li>
+</ol>
+<hr />
+<h2>⚠️ Current Issues &amp; Gaps</h2>
+<h3>Incomplete Sections</h3>
+<ol>
+<li><strong>Places</strong> - No places have been identified or documented</li>
+<li>Potential locations: family homes, cities, schools, etc.</li>
+<li>
+<p>Needs manual review of PDF content</p>
+</li>
+<li>
+<p><strong>Themes</strong> - No life themes have been extracted</p>
+</li>
+<li>Potential themes: family, childhood, education, career, marriage, etc.</li>
+<li>Requires thematic analysis of memoir content</li>
+</ol>
+<h3>Structural Issues</h3>
+<ol>
+<li><strong>Image Directory Discrepancy</strong></li>
+<li>Project layout reports "806 files" but directories appear empty</li>
+<li>May be .gitignore issue or filesystem sync problem</li>
+<li>
+<p>Need to verify actual file existence</p>
+</li>
+<li>
+<p><strong>Limited Context in Person Pages</strong></p>
+</li>
+<li>Many people (page 13 group) have minimal information</li>
+<li>"About" sections are generic</li>
+<li>
+<p>Need more detailed biographical context</p>
+</li>
+<li>
+<p><strong>Missing Relationships</strong></p>
+</li>
+<li>Few "Related People" connections documented</li>
+<li>Family tree relationships not mapped</li>
+<li>Could enhance cross-referencing</li>
+</ol>
+<h3>Content Quality</h3>
+<ol>
+<li><strong>OCR Accuracy</strong></li>
+<li>PDF may be image-based requiring OCR</li>
+<li>OCR quality affects entity extraction</li>
+<li>
+<p>Manual verification recommended</p>
+</li>
+<li>
+<p><strong>Page References Sparse</strong></p>
+</li>
+<li>Some people only appear on one page</li>
+<li>May indicate incomplete extraction</li>
+<li>Should verify against actual PDF content</li>
+</ol>
+<hr />
+<h2>🎯 Refactoring Opportunities</h2>
+<h3>1. Consolidate Duplicate Patterns</h3>
+<p><strong>Issue:</strong> Similar code patterns in <code>create_wiki.py</code> and <code>create_pdf_wiki.py</code></p>
+<p><strong>Refactoring:</strong>
+- Create shared <code>wiki_generator.py</code> module
+- Extract common functions:
+  - <code>create_person_page()</code>
+  - <code>create_place_page()</code>
+  - <code>create_theme_page()</code>
+  - <code>find_entity_references()</code>
+  - <code>create_wiki_home()</code></p>
+<h3>2. Improve Entity Extraction</h3>
+<p><strong>Issue:</strong> Limited people detection, no places or themes</p>
+<p><strong>Refactoring:</strong>
+- Enhance NLP-based entity recognition
+- Add spaCy or NLTK integration
+- Create configurable entity patterns
+- Manual curation interface for verification</p>
+<h3>3. Standardize Folder Naming</h3>
+<p><strong>Issue:</strong> Using "s_letter" for non-Scarlet-Letter content</p>
+<p><strong>Refactoring:</strong>
+- Rename <code>s_letter/</code> to <code>wiki/</code> or <code>memoir_wiki/</code>
+- Update all internal references
+- Create migration script for path updates
+- Update documentation</p>
+<h3>4. Add Theme Generation</h3>
+<p><strong>Issue:</strong> Empty themes directory</p>
+<p><strong>Refactoring:</strong>
+- Implement <code>identify_memoir_themes()</code> properly
+- Create theme detection keywords
+- Generate theme pages automatically
+- Link themes to relevant people/pages</p>
+<h3>5. Enhance Image Context</h3>
+<p><strong>Issue:</strong> 806 image pages with minimal context</p>
+<p><strong>Refactoring:</strong>
+- Improve OCR text extraction from images
+- Add image caption detection
+- Create image galleries by theme/person
+- Add visual timeline of images</p>
+<h3>6. Create Family Tree Visualization</h3>
+<p><strong>Issue:</strong> Family relationships not clearly mapped</p>
+<p><strong>Refactoring:</strong>
+- Parse family relationships from text
+- Create family tree diagram (Mermaid, DOT)
+- Add genealogical connections
+- Generate family tree page</p>
+<h3>7. Add Search Functionality</h3>
+<p><strong>Issue:</strong> No search across wiki content</p>
+<p><strong>Refactoring:</strong>
+- Generate search index (JSON)
+- Create simple JavaScript search
+- Add tag-based navigation
+- Implement full-text search</p>
+<hr />
+<h2>🛠️ Recommended Refactoring Steps</h2>
+<h3>Phase 1: Clean Up Structure (Priority: High)</h3>
+<ol>
+<li>✅ Create this refactoring index</li>
+<li>⬜ Verify and fix image file locations</li>
+<li>⬜ Rename <code>s_letter/</code> to <code>wiki/</code></li>
+<li>⬜ Update all path references</li>
+<li>⬜ Add .gitignore for generated files</li>
+</ol>
+<h3>Phase 2: Enhance Content (Priority: Medium)</h3>
+<ol>
+<li>⬜ Manual review of PDF to identify places</li>
+<li>⬜ Create place pages for identified locations</li>
+<li>⬜ Implement theme detection and generation</li>
+<li>⬜ Enhance people descriptions with more context</li>
+<li>⬜ Add relationship mapping between people</li>
+</ol>
+<h3>Phase 3: Code Consolidation (Priority: Medium)</h3>
+<ol>
+<li>⬜ Extract shared wiki generation code</li>
+<li>⬜ Create unified configuration system</li>
+<li>⬜ Standardize entity extraction pipeline</li>
+<li>⬜ Add comprehensive unit tests</li>
+<li>⬜ Create CLI tool for wiki operations</li>
+</ol>
+<h3>Phase 4: Advanced Features (Priority: Low)</h3>
+<ol>
+<li>⬜ Add timeline visualization</li>
+<li>⬜ Create family tree diagram</li>
+<li>⬜ Implement search functionality</li>
+<li>⬜ Add image galleries</li>
+<li>⬜ Generate PDF export of wiki</li>
+</ol>
+<hr />
+<h2>📋 Comparison with Scarlet Letter Structure</h2>
+<h3>Similarities</h3>
+<ul>
+<li>✅ Main index file at root</li>
+<li>✅ Wiki subdirectory with README</li>
+<li>✅ People/characters directory</li>
+<li>✅ Places directory (structure exists)</li>
+<li>✅ Themes directory (structure exists)</li>
+<li>✅ Index subdirectory for category pages</li>
+<li>✅ Wikilink-based navigation</li>
+<li>✅ Consistent page templates</li>
+</ul>
+<h3>Differences</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Scarlet Letter</th>
+<th>Gladys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Source</strong></td>
+<td>HTML from Project Gutenberg</td>
+<td>PDF memoir</td>
+</tr>
+<tr>
+<td><strong>People</strong></td>
+<td>5 major + supporting</td>
+<td>16 family members</td>
+</tr>
+<tr>
+<td><strong>Places</strong></td>
+<td>4 locations</td>
+<td>0 (not extracted)</td>
+</tr>
+<tr>
+<td><strong>Themes</strong></td>
+<td>4 literary themes</td>
+<td>0 (not extracted)</td>
+</tr>
+<tr>
+<td><strong>Images</strong></td>
+<td>~90 illustrations</td>
+<td>806 photos</td>
+</tr>
+<tr>
+<td><strong>Content Type</strong></td>
+<td>Fiction analysis</td>
+<td>Life story/memoir</td>
+</tr>
+<tr>
+<td><strong>Entity Type</strong></td>
+<td>Characters</td>
+<td>Real people</td>
+</tr>
+<tr>
+<td><strong>Structure</strong></td>
+<td><code>wiki/</code> folder</td>
+<td><code>s_letter/</code> folder</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🔍 Key Dependencies</h2>
+<h3>Python Libraries Required</h3>
+<ul>
+<li><code>PyMuPDF</code> (fitz) - PDF processing</li>
+<li><code>pytesseract</code> - OCR (optional)</li>
+<li><code>easyocr</code> - OCR (optional)</li>
+<li><code>PIL</code> (Pillow) - Image processing</li>
+<li>Standard library: <code>re</code>, <code>pathlib</code>, <code>collections</code></li>
+</ul>
+<h3>External Dependencies</h3>
+<ul>
+<li>Tesseract OCR (if using pytesseract)</li>
+<li>Source PDF file must exist</li>
+<li>Write permissions for wiki directory</li>
+</ul>
+<hr />
+<h2>💡 Best Practices Observed</h2>
+<h3>Good Patterns</h3>
+<ol>
+<li>✅ Consistent file naming conventions</li>
+<li>✅ Structured navigation in every page</li>
+<li>✅ Separation of concerns (people/places/themes)</li>
+<li>✅ Markdown-based for portability</li>
+<li>✅ Wikilink format for cross-references</li>
+<li>✅ Page number references for traceability</li>
+</ol>
+<h3>Areas for Improvement</h3>
+<ol>
+<li>⚠️ Hard-coded file paths in scripts</li>
+<li>⚠️ Limited error handling</li>
+<li>⚠️ No configuration file system</li>
+<li>⚠️ Minimal documentation in code</li>
+<li>⚠️ No automated tests</li>
+<li>⚠️ Manual entity curation needed</li>
+</ol>
+<hr />
+<h2>📖 Usage Guide</h2>
+<h3>Browsing the Wiki</h3>
+<ol>
+<li>Start at <code>Gladys_Life_Index.md</code> for overview</li>
+<li>Click wiki link to open <code>s_letter/README.md</code></li>
+<li>Navigate to people, places, or themes</li>
+<li>Follow wikilinks between pages</li>
+<li>Use page numbers to reference source PDF</li>
+</ol>
+<h3>Updating the Wiki</h3>
+<ol>
+<li>Run <code>create_pdf_wiki.py</code> to regenerate from PDF</li>
+<li>Use <code>update_wiki_with_all_people.py</code> to add new people</li>
+<li>Manually create place/theme pages as needed</li>
+<li>Update main index after changes</li>
+<li>Verify all wikilinks work</li>
+</ol>
+<h3>Adding New People</h3>
+<pre><code class="language-python"># In update_wiki_with_all_people.py or similar
+new_people = {
+    'Person Name': {
+        'pages': [1, 5, 10],
+        'description': 'Family member or friend',
+        'relationships': ['Other Person']
+    }
+}
+</code></pre>
+<hr />
+<h2>🚀 Future Enhancements</h2>
+<h3>Content Improvements</h3>
+<ul>
+<li>[ ] Add biographical details for each person</li>
+<li>[ ] Extract and document places mentioned</li>
+<li>[ ] Identify and document life themes</li>
+<li>[ ] Create chronological timeline</li>
+<li>[ ] Add photo captions and descriptions</li>
+</ul>
+<h3>Technical Improvements</h3>
+<ul>
+<li>[ ] Implement full-text search</li>
+<li>[ ] Add responsive web interface</li>
+<li>[ ] Create interactive family tree</li>
+<li>[ ] Generate static site (Jekyll/Hugo)</li>
+<li>[ ] Add export to various formats (PDF, EPUB)</li>
+</ul>
+<h3>User Experience</h3>
+<ul>
+<li>[ ] Add table of contents to long pages</li>
+<li>[ ] Create visual navigation map</li>
+<li>[ ] Add "On This Page" mini-index</li>
+<li>[ ] Implement breadcrumb navigation</li>
+<li>[ ] Add "Related Pages" suggestions</li>
+</ul>
+<hr />
+<h2>📞 Reference Documentation</h2>
+<h3>Related Files</h3>
+<ul>
+<li><code>../create_pdf_wiki.py</code> - Main generation script</li>
+<li><code>../ocr_entity_extraction.py</code> - OCR processing</li>
+<li><code>../update_wiki_with_all_people.py</code> - People updater</li>
+<li><code>../create_wiki.py</code> - Scarlet Letter generator (reference)</li>
+</ul>
+<h3>Configuration Locations</h3>
+<ul>
+<li>PDF path: <code>E:/dynamic-indexer/Gladys/MyLifeStoryGladys Klingenberg.pdf</code></li>
+<li>Wiki root: <code>E:/dynamic-indexer/Gladys/s_letter</code></li>
+<li>Images dir: <code>E:/dynamic-indexer/Gladys/images</code></li>
+<li>Main index: <code>E:/dynamic-indexer/Gladys/Gladys_Life_Index.md</code></li>
+</ul>
+<hr />
+<h2>✅ Refactoring Checklist</h2>
+<p>Use this checklist to track refactoring progress:</p>
+<h3>Structure</h3>
+<ul>
+<li>[x] Document current structure</li>
+<li>[ ] Fix folder naming (s_letter → wiki)</li>
+<li>[ ] Verify image files exist</li>
+<li>[ ] Consolidate configuration</li>
+<li>[ ] Add README files</li>
+</ul>
+<h3>Content</h3>
+<ul>
+<li>[ ] Complete places section</li>
+<li>[ ] Complete themes section</li>
+<li>[ ] Enhance people descriptions</li>
+<li>[ ] Add relationship mapping</li>
+<li>[ ] Improve image contexts</li>
+</ul>
+<h3>Code</h3>
+<ul>
+<li>[ ] Extract common functions</li>
+<li>[ ] Add error handling</li>
+<li>[ ] Create configuration file</li>
+<li>[ ] Add logging</li>
+<li>[ ] Write unit tests</li>
+<li>[ ] Document functions</li>
+<li>[ ] Create CLI interface</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>[ ] Add code comments</li>
+<li>[ ] Create user guide</li>
+<li>[ ] Document API functions</li>
+<li>[ ] Add examples</li>
+<li>[ ] Create contribution guide</li>
+</ul>
+<hr />
+<p><em>This refactoring index will be updated as changes are made to the Gladys folder structure.</em></p>
+<p><strong>Last Updated:</strong> October 14, 2025<br />
+<strong>Status:</strong> Initial documentation complete<br />
+<strong>Next Steps:</strong> Begin Phase 1 refactoring tasks</p>
+            </div>
+            
+            <footer class="nav-footer">
+                <div class="nav-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Wiki Home</a></li>
+                        <li><a href="people.html">People Index</a></li>
+                        <li><a href="places.html">Places Index</a></li>
+                        <li><a href="images.html">Images Index</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="graph.html">Relationship Graph</a></li>
+                        <li><a href="javascript:window.print()">Print This Page</a></li>
+                        <li><a href="#" onclick="toggleDarkMode()">Toggle Dark Mode</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>About</h4>
+                    <p>Generated from Gladys Klingenberg's memoir with 350+ pages, 16 people, 17 places, and 306 images.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Search functionality
+        function searchWiki(query) {
+            if (query.length < 2) return;
+            
+            // Simple client-side search implementation
+            const content = document.querySelector('.content');
+            const text = content.textContent.toLowerCase();
+            const queryLower = query.toLowerCase();
+            
+            // Highlight search terms (basic implementation)
+            if (text.includes(queryLower)) {
+                console.log('Search found results for:', query);
+                // In a full implementation, this would highlight results
+            }
+        }
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Handle wiki links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert [[wiki links]] to actual links
+            const content = document.querySelector('.content');
+            if (content) {
+                let html = content.innerHTML;
+                // Convert [[link]] to <a href="link.html" class="wiki-link">link</a>
+                html = html.replace(/\[\[([^\]]+)\]\]/g, function(match, link) {
+                    const parts = link.split('|');
+                    const target = parts[0].trim();
+                    const display = parts[1] ? parts[1].trim() : target;
+                    
+                    // Convert target to filename
+                    let filename = target.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+                    if (filename.startsWith('../')) {
+                        filename = filename.substring(3);
+                    }
+                    if (!filename.endsWith('.html')) {
+                        filename += '.html';
+                    }
+                    
+                    return `<a href="${filename}" class="wiki-link">${display}</a>`;
+                });
+                content.innerHTML = html;
+            }
+        });
+        
+        // Image lightbox
+        function openLightbox(src) {
+            const lightbox = document.createElement('div');
+            lightbox.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                cursor: pointer;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+            `;
+            
+            lightbox.appendChild(img);
+            lightbox.addEventListener('click', () => document.body.removeChild(lightbox));
+            document.body.appendChild(lightbox);
+        }
+        
+        // Add click handlers to images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.content img, .image-gallery img');
+            images.forEach(img => {
+                img.addEventListener('click', () => openLightbox(img.src));
+                img.style.cursor = 'pointer';
+            });
+        });
+    </script>
+</body>
+</html>

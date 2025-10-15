@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gladys Folder - Refactoring Documentation - Gladys Klingenberg's Life Story Wiki</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #3498db;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #34495e;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        .content ul, .content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Wiki links */
+        .wiki-link {
+            color: #3498db;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        /* Images */
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Image gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .image-item {
+            text-align: center;
+        }
+        
+        .image-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .image-item img:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-item a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        /* Navigation footer */
+        .nav-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .nav-section {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .nav-section h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-section ul {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .nav-section li {
+            margin-bottom: 0.3rem;
+        }
+        
+        /* Search box */
+        .search-box {
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            background: #ecf0f1;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumbs-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .breadcrumbs a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .breadcrumbs a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .header, .sidebar, .nav-footer {
+                display: none;
+            }
+            
+            .container {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .main-content {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Gladys Klingenberg's Life Story Wiki</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👥 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="images.html" class="nav-button">🖼️ Images</a>
+                <a href="graph.html" class="nav-button">🕸️ Graph</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-content">
+            <a href="index.html">Home</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search wiki..." onkeyup="searchWiki(this.value)">
+            </div>
+            
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="index.html">🏠 Wiki Home</a></li>
+                <li><a href="people.html">👥 All People (16)</a></li>
+                <li><a href="places.html">📍 All Places (17)</a></li>
+                <li><a href="images.html">🖼️ All Images (306)</a></li>
+                <li><a href="graph.html">🕸️ Relationship Graph</a></li>
+            </ul>
+            
+            <h3>Key People</h3>
+            <ul>
+                <li><a href="people/gladys_klingenberg.html">Gladys Klingenberg</a></li>
+                <li><a href="people/tom_herrman.html">Tom Herrman</a></li>
+                <li><a href="people/bryant_herrman.html">Bryant Herrman</a></li>
+                <li><a href="people/mary_safrona.html">Mary Safrona</a></li>
+            </ul>
+            
+            <h3>Notable Places</h3>
+            <ul>
+                <li><a href="places/family_farm.html">Family Farm</a></li>
+                <li><a href="places/lutheran_church.html">Lutheran Church</a></li>
+                <li><a href="places/minnesota.html">Minnesota</a></li>
+                <li><a href="places/chicago.html">Chicago</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <div class="content">
+                <h1>Gladys Folder - Refactoring Documentation</h1>
+<p><em>Complete guide to the Gladys Klingenberg memoir wiki system and its refactoring</em></p>
+<hr />
+<h2>📚 Documentation Index</h2>
+<p>This folder contains comprehensive documentation for understanding, maintaining, and refactoring the Gladys wiki system. Start here to navigate the documentation:</p>
+<h3>Quick Start</h3>
+<p><strong>New to this project? Start here:</strong>
+1. Read this README (you are here)
+2. Check <a href="QUICK_REFERENCE.md">QUICK_REFERENCE.md</a> for common tasks
+3. Review <a href="Gladys_Life_Index.md">Gladys_Life_Index.md</a> to see the wiki</p>
+<h3>For Understanding the System</h3>
+<ul>
+<li>📄 <strong><a href="STRUCTURE_MAP.md">STRUCTURE_MAP.md</a></strong> - Visual diagrams and structure overview</li>
+<li>📄 <strong><a href="CODE_DEPENDENCIES.md">CODE_DEPENDENCIES.md</a></strong> - Technical analysis of Python scripts</li>
+<li>📄 <strong><a href="QUICK_REFERENCE.md">QUICK_REFERENCE.md</a></strong> - Fast reference guide</li>
+</ul>
+<h3>For Refactoring Work</h3>
+<ul>
+<li>📋 <strong><a href="REFACTORING_CHECKLIST.md">REFACTORING_CHECKLIST.md</a></strong> - Step-by-step action plan</li>
+<li>📖 <strong><a href="REFACTORING_INDEX.md">REFACTORING_INDEX.md</a></strong> - Detailed analysis and recommendations</li>
+</ul>
+<h3>For Using the Wiki</h3>
+<ul>
+<li>🌐 <strong><a href="Gladys_Life_Index.md">Gladys_Life_Index.md</a></strong> - Main wiki entry point</li>
+<li>🌐 <strong><a href="s_letter/README.md">s_letter/README.md</a></strong> - Wiki homepage</li>
+</ul>
+<hr />
+<h2>🎯 What is This?</h2>
+<p>This folder contains a <strong>digital wiki system</strong> for Gladys Klingenberg's memoir, automatically generated from a PDF. The wiki includes:</p>
+<ul>
+<li><strong>16 people</strong> from Gladys's life</li>
+<li><strong>806 images</strong> extracted from the memoir</li>
+<li><strong>Interconnected markdown pages</strong> with navigation</li>
+<li><strong>Searchable index</strong> of people, places, and themes</li>
+</ul>
+<h3>The Source</h3>
+<ul>
+<li><strong>PDF:</strong> <code>MyLifeStoryGladys Klingenberg.pdf</code> - A photo-based memoir</li>
+<li><strong>Pages:</strong> ~250 pages of text and images</li>
+<li><strong>Format:</strong> Image-heavy with some text</li>
+</ul>
+<hr />
+<h2>🏗️ System Architecture</h2>
+<pre><code>Gladys/
+├── 📄 PDF Source
+│   └── MyLifeStoryGladys Klingenberg.pdf
+│
+├── 📁 Generated Wiki (s_letter/)
+│   ├── 16 people pages
+│   ├── 806 image pages
+│   ├── Index pages
+│   └── README homepage
+│
+├── 📁 Extracted Assets (images/)
+│   └── 806 PNG files
+│
+├── 🐍 Generation Scripts (../)
+│   ├── create_pdf_wiki.py
+│   ├── ocr_entity_extraction.py
+│   └── update_wiki_with_all_people.py
+│
+└── 📚 Documentation (this folder)
+    ├── README_REFACTORING.md (you are here)
+    ├── REFACTORING_INDEX.md
+    ├── REFACTORING_CHECKLIST.md
+    ├── QUICK_REFERENCE.md
+    ├── STRUCTURE_MAP.md
+    └── CODE_DEPENDENCIES.md
+</code></pre>
+<hr />
+<h2>🚀 Quick Actions</h2>
+<h3>View the Wiki</h3>
+<pre><code class="language-bash"># Open the main index
+start Gladys_Life_Index.md
+
+# Or browse interactively
+start s_letter/README.md
+</code></pre>
+<h3>Regenerate Wiki</h3>
+<pre><code class="language-bash"># From project root (E:/dynamic-indexer/)
+python create_pdf_wiki.py
+</code></pre>
+<h3>Update People</h3>
+<pre><code class="language-bash">python update_wiki_with_all_people.py
+</code></pre>
+<h3>Run OCR Analysis</h3>
+<pre><code class="language-bash">python ocr_entity_extraction.py
+</code></pre>
+<hr />
+<h2>📊 Current State</h2>
+<h3>What's Complete ✅</h3>
+<ul>
+<li>✅ 16 people documented</li>
+<li>✅ 806 images extracted</li>
+<li>✅ Basic wiki structure</li>
+<li>✅ Navigation links</li>
+<li>✅ Main index page</li>
+<li>✅ Comprehensive refactoring documentation</li>
+</ul>
+<h3>What's Missing ⚠️</h3>
+<ul>
+<li>⚠️ Places section (empty)</li>
+<li>⚠️ Themes section (empty)</li>
+<li>⚠️ Detailed people biographies</li>
+<li>⚠️ Family relationship mapping</li>
+<li>⚠️ Code tests</li>
+<li>⚠️ Error handling in scripts</li>
+</ul>
+<h3>What Needs Improvement 🔧</h3>
+<ul>
+<li>🔧 Folder naming (<code>s_letter</code> should be <code>wiki</code>)</li>
+<li>🔧 Code duplication across scripts</li>
+<li>🔧 Hardcoded file paths</li>
+<li>🔧 Limited entity extraction</li>
+<li>🔧 Minimal image context</li>
+</ul>
+<hr />
+<h2>🎓 How to Use This Documentation</h2>
+<h3>For Developers</h3>
+<p>If you're working on the code:</p>
+<ol>
+<li><strong>Start with:</strong> <a href="CODE_DEPENDENCIES.md">CODE_DEPENDENCIES.md</a></li>
+<li>Understand the scripts and their relationships</li>
+<li>See code duplication analysis</li>
+<li>
+<p>Review refactoring opportunities</p>
+</li>
+<li>
+<p><strong>Then read:</strong> <a href="REFACTORING_CHECKLIST.md">REFACTORING_CHECKLIST.md</a></p>
+</li>
+<li>Follow the step-by-step action plan</li>
+<li>Check off completed tasks</li>
+<li>
+<p>Track progress</p>
+</li>
+<li>
+<p><strong>Reference:</strong> <a href="QUICK_REFERENCE.md">QUICK_REFERENCE.md</a></p>
+</li>
+<li>Quick lookups during development</li>
+<li>Common commands</li>
+<li>File naming rules</li>
+</ol>
+<h3>For Content Editors</h3>
+<p>If you're adding/editing content:</p>
+<ol>
+<li><strong>Start with:</strong> <a href="QUICK_REFERENCE.md">QUICK_REFERENCE.md</a></li>
+<li>Learn how to add people, places, themes</li>
+<li>See file naming conventions</li>
+<li>
+<p>Get page templates</p>
+</li>
+<li>
+<p><strong>Then review:</strong> <a href="STRUCTURE_MAP.md">STRUCTURE_MAP.md</a></p>
+</li>
+<li>Understand the wiki organization</li>
+<li>See linking patterns</li>
+<li>
+<p>Learn navigation structure</p>
+</li>
+<li>
+<p><strong>Reference:</strong> <a href="Gladys_Life_Index.md">Gladys_Life_Index.md</a></p>
+</li>
+<li>See what's already documented</li>
+<li>Check page references</li>
+<li>Follow existing patterns</li>
+</ol>
+<h3>For Project Managers</h3>
+<p>If you're overseeing the work:</p>
+<ol>
+<li><strong>Start with:</strong> <a href="REFACTORING_INDEX.md">REFACTORING_INDEX.md</a></li>
+<li>Get comprehensive overview</li>
+<li>See recommendations</li>
+<li>
+<p>Understand scope</p>
+</li>
+<li>
+<p><strong>Then check:</strong> <a href="REFACTORING_CHECKLIST.md">REFACTORING_CHECKLIST.md</a></p>
+</li>
+<li>Track progress (current: 6%)</li>
+<li>See time estimates (48 hours remaining)</li>
+<li>
+<p>Monitor blockers</p>
+</li>
+<li>
+<p><strong>Reference:</strong> This README</p>
+</li>
+<li>Quick status overview</li>
+<li>System architecture</li>
+<li>Current state summary</li>
+</ol>
+<hr />
+<h2>📈 Project Status</h2>
+<h3>Overall Progress: 6%</h3>
+<ul>
+<li><strong>Phase 1 (Documentation):</strong> 80% complete</li>
+<li><strong>Phase 2 (Code Cleanup):</strong> 0% complete</li>
+<li><strong>Phase 3 (Content Enhancement):</strong> 0% complete</li>
+<li><strong>Phase 4 (Structural Changes):</strong> 0% complete</li>
+<li><strong>Phase 5 (Testing):</strong> 0% complete</li>
+<li><strong>Phase 6 (Advanced Features):</strong> 0% complete</li>
+<li><strong>Phase 7 (Distribution):</strong> 0% complete</li>
+</ul>
+<h3>Next Actions</h3>
+<ol>
+<li>✅ Complete documentation (almost done!)</li>
+<li>⬜ Verify image files exist</li>
+<li>⬜ Start Phase 2: Extract common utilities</li>
+<li>⬜ Create configuration system</li>
+<li>⬜ Add error handling</li>
+</ol>
+<h3>Estimated Time to Complete</h3>
+<ul>
+<li><strong>Remaining work:</strong> ~47 hours</li>
+<li><strong>At 4 hours/day:</strong> ~12 working days</li>
+<li><strong>At 8 hours/day:</strong> ~6 working days</li>
+</ul>
+<hr />
+<h2>🎯 Goals</h2>
+<h3>Short-term (Next 2 weeks)</h3>
+<ol>
+<li>Complete Phase 1: Documentation ✅</li>
+<li>Complete Phase 2: Code cleanup</li>
+<li>Start Phase 3: Content enhancement</li>
+<li>Get to 25% overall completion</li>
+</ol>
+<h3>Medium-term (Next month)</h3>
+<ol>
+<li>Complete Phases 3-4</li>
+<li>Add places and themes content</li>
+<li>Reorganize folder structure</li>
+<li>Get to 60% overall completion</li>
+</ol>
+<h3>Long-term (Next 3 months)</h3>
+<ol>
+<li>Complete all 7 phases</li>
+<li>Achieve 100% completion</li>
+<li>Release version 1.0.0</li>
+<li>Package for distribution</li>
+</ol>
+<hr />
+<h2>🤝 Contributing</h2>
+<h3>Before You Start</h3>
+<ol>
+<li>Read this README</li>
+<li>Review relevant documentation</li>
+<li>Check the refactoring checklist</li>
+<li>Understand the current state</li>
+</ol>
+<h3>Making Changes</h3>
+<ol>
+<li>Create a branch</li>
+<li>Make your changes</li>
+<li>Test thoroughly</li>
+<li>Update documentation</li>
+<li>Update refactoring checklist</li>
+<li>Commit with clear message</li>
+<li>Create pull request (if applicable)</li>
+</ol>
+<h3>Commit Message Format</h3>
+<pre><code>[Phase N] Brief description
+
+- Detailed change 1
+- Detailed change 2
+- Updated documentation
+
+Checklist: #X in REFACTORING_CHECKLIST.md
+</code></pre>
+<hr />
+<h2>📞 Getting Help</h2>
+<h3>Documentation Questions</h3>
+<ul>
+<li>Check <a href="QUICK_REFERENCE.md">QUICK_REFERENCE.md</a> first</li>
+<li>Look in relevant specialized doc</li>
+<li>Search for keywords</li>
+</ul>
+<h3>Code Questions</h3>
+<ul>
+<li>Check <a href="CODE_DEPENDENCIES.md">CODE_DEPENDENCIES.md</a></li>
+<li>Look at function documentation</li>
+<li>Review similar code in other scripts</li>
+</ul>
+<h3>Content Questions</h3>
+<ul>
+<li>Check existing wiki pages</li>
+<li>Review <a href="Gladys_Life_Index.md">Gladys_Life_Index.md</a></li>
+<li>Look at similar project (Scarlet Letter)</li>
+</ul>
+<hr />
+<h2>🔗 Related Projects</h2>
+<h3>Scarlet Letter Wiki</h3>
+<p>Located at <code>../s_letter/</code>
+- Similar structure
+- Fiction vs memoir
+- Reference for patterns</p>
+<h3>Other Dynamic Indexes</h3>
+<ul>
+<li><code>create_index.py</code> - Main index creator</li>
+<li><code>create_wiki.py</code> - Scarlet Letter generator</li>
+<li><code>deep_text_analysis.py</code> - Text analysis tools</li>
+</ul>
+<hr />
+<h2>📝 Change Log</h2>
+<h3>2025-10-14</h3>
+<ul>
+<li>✅ Created comprehensive refactoring documentation</li>
+<li>REFACTORING_INDEX.md (detailed analysis)</li>
+<li>QUICK_REFERENCE.md (fast reference)</li>
+<li>STRUCTURE_MAP.md (visual diagrams)</li>
+<li>CODE_DEPENDENCIES.md (technical analysis)</li>
+<li>REFACTORING_CHECKLIST.md (action plan)</li>
+<li>README_REFACTORING.md (this file)</li>
+<li>📊 Documented current state (16 people, 806 images)</li>
+<li>🎯 Created 7-phase refactoring plan</li>
+<li>📈 Estimated 48 hours of work remaining</li>
+<li>🚀 Ready to begin Phase 2 (code cleanup)</li>
+</ul>
+<hr />
+<h2>📄 License &amp; Credits</h2>
+<h3>Source Material</h3>
+<ul>
+<li><strong>Memoir:</strong> Gladys Klingenberg's Life Story</li>
+<li><strong>Format:</strong> PDF with images</li>
+<li><strong>Status:</strong> Private family document</li>
+</ul>
+<h3>Generated Wiki</h3>
+<ul>
+<li><strong>Generator:</strong> Custom Python scripts</li>
+<li><strong>Format:</strong> Markdown with wikilinks</li>
+<li><strong>License:</strong> (Specify as needed)</li>
+</ul>
+<h3>Tools Used</h3>
+<ul>
+<li><strong>PyMuPDF (fitz)</strong> - PDF processing</li>
+<li><strong>Python 3.x</strong> - Script language</li>
+<li><strong>Markdown</strong> - Content format</li>
+</ul>
+<hr />
+<h2>🎯 Success Criteria</h2>
+<p>This project will be considered successful when:</p>
+<ol>
+<li>✅ <strong>Documentation Complete</strong></li>
+<li>All reference docs exist</li>
+<li>Clear and comprehensive</li>
+<li>
+<p>Easy to navigate</p>
+</li>
+<li>
+<p>⬜ <strong>Code Quality High</strong></p>
+</li>
+<li>No duplication</li>
+<li>Well-tested (&gt;80% coverage)</li>
+<li>Properly configured</li>
+<li>
+<p>Error handling throughout</p>
+</li>
+<li>
+<p>⬜ <strong>Content Complete</strong></p>
+</li>
+<li>All people have details</li>
+<li>Places documented</li>
+<li>Themes identified</li>
+<li>
+<p>Images well-organized</p>
+</li>
+<li>
+<p>⬜ <strong>Structure Optimal</strong></p>
+</li>
+<li>Logical folder names</li>
+<li>Clear organization</li>
+<li>Easy to maintain</li>
+<li>
+<p>Extensible design</p>
+</li>
+<li>
+<p>⬜ <strong>Usability Excellent</strong></p>
+</li>
+<li>Easy to browse</li>
+<li>Fast to search</li>
+<li>Clear navigation</li>
+<li>No broken links</li>
+</ol>
+<hr />
+<h2>📚 Further Reading</h2>
+<h3>Internal Docs</h3>
+<ul>
+<li><a href="REFACTORING_INDEX.md">REFACTORING_INDEX.md</a> - Most comprehensive</li>
+<li><a href="CODE_DEPENDENCIES.md">CODE_DEPENDENCIES.md</a> - Most technical</li>
+<li><a href="STRUCTURE_MAP.md">STRUCTURE_MAP.md</a> - Most visual</li>
+</ul>
+<h3>External Resources</h3>
+<ul>
+<li><a href="https://help.obsidian.md/Linking+notes+and+files/Internal+links">Obsidian Wikilink format</a></li>
+<li><a href="https://www.markdownguide.org/">Markdown Guide</a></li>
+<li><a href="https://pymupdf.readthedocs.io/">PyMuPDF Documentation</a></li>
+</ul>
+<hr />
+<p><strong>Last Updated:</strong> October 14, 2025<br />
+<strong>Documentation Version:</strong> 1.0<br />
+<strong>Project Status:</strong> Phase 1 (80% complete)<br />
+<strong>Overall Progress:</strong> 6% (4 of 68 tasks complete)</p>
+<hr />
+<p><em>This documentation provides everything needed to understand, maintain, and refactor the Gladys wiki system. For the most up-to-date status, check the REFACTORING_CHECKLIST.md.</em></p>
+            </div>
+            
+            <footer class="nav-footer">
+                <div class="nav-section">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Wiki Home</a></li>
+                        <li><a href="people.html">People Index</a></li>
+                        <li><a href="places.html">Places Index</a></li>
+                        <li><a href="images.html">Images Index</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="graph.html">Relationship Graph</a></li>
+                        <li><a href="javascript:window.print()">Print This Page</a></li>
+                        <li><a href="#" onclick="toggleDarkMode()">Toggle Dark Mode</a></li>
+                    </ul>
+                </div>
+                <div class="nav-section">
+                    <h4>About</h4>
+                    <p>Generated from Gladys Klingenberg's memoir with 350+ pages, 16 people, 17 places, and 306 images.</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    
+    <script>
+        // Search functionality
+        function searchWiki(query) {
+            if (query.length < 2) return;
+            
+            // Simple client-side search implementation
+            const content = document.querySelector('.content');
+            const text = content.textContent.toLowerCase();
+            const queryLower = query.toLowerCase();
+            
+            // Highlight search terms (basic implementation)
+            if (text.includes(queryLower)) {
+                console.log('Search found results for:', query);
+                // In a full implementation, this would highlight results
+            }
+        }
+        
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        
+        // Handle wiki links
+        document.addEventListener('DOMContentLoaded', function() {
+            // Convert [[wiki links]] to actual links
+            const content = document.querySelector('.content');
+            if (content) {
+                let html = content.innerHTML;
+                // Convert [[link]] to <a href="link.html" class="wiki-link">link</a>
+                html = html.replace(/\[\[([^\]]+)\]\]/g, function(match, link) {
+                    const parts = link.split('|');
+                    const target = parts[0].trim();
+                    const display = parts[1] ? parts[1].trim() : target;
+                    
+                    // Convert target to filename
+                    let filename = target.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
+                    if (filename.startsWith('../')) {
+                        filename = filename.substring(3);
+                    }
+                    if (!filename.endsWith('.html')) {
+                        filename += '.html';
+                    }
+                    
+                    return `<a href="${filename}" class="wiki-link">${display}</a>`;
+                });
+                content.innerHTML = html;
+            }
+        });
+        
+        // Image lightbox
+        function openLightbox(src) {
+            const lightbox = document.createElement('div');
+            lightbox.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                cursor: pointer;
+            `;
+            
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+            `;
+            
+            lightbox.appendChild(img);
+            lightbox.addEventListener('click', () => document.body.removeChild(lightbox));
+            document.body.appendChild(lightbox);
+        }
+        
+        // Add click handlers to images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('.content img, .image-gallery img');
+            images.forEach(img => {
+                img.addEventListener('click', () => openLightbox(img.src));
+                img.style.cursor = 'pointer';
+            });
+        });
+    </script>
+</body>
+</html>

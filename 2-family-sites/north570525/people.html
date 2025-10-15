@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development banner */
+        .dev-banner {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .dev-text {
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .nav-button.active {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #2d7aa0;
+            padding-bottom: 0.5rem;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar a {
+            color: #2d7aa0;
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #1a4d6b;
+            text-decoration: underline;
+        }
+        
+        /* Main content */
+        .main-content {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content h1 {
+            color: #1a4d6b;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .content h2 {
+            color: #1a4d6b;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2d7aa0;
+            padding-left: 1rem;
+        }
+        
+        .content h3 {
+            color: #2d7aa0;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .content p {
+            margin-bottom: 1rem;
+        }
+        
+        /* People grid */
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .person-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid #2d7aa0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .person-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .person-card h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        
+        .person-card .dates {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        
+        .person-card .relationship {
+            background: #2d7aa0;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .person-card p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .person-card .links a {
+            color: #2d7aa0;
+            text-decoration: none;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .person-card .links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Generation sections */
+        .generation-section {
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            border-radius: 8px;
+            border-left: 6px solid #1a4d6b;
+        }
+        
+        .generation-title {
+            color: #1a4d6b;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #2d7aa0;
+            padding-bottom: 0.5rem;
+        }
+        
+        /* Stats section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: #1a4d6b;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Wiki links */
+        .wiki-link {
+            color: #2d7aa0;
+            text-decoration: none;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+        
+        .wiki-link:hover {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .people-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button active">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="timeline.html" class="nav-button">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>🌳 Family Tree</h3>
+            <ul>
+                <li><a href="deacon_isaac_north.html">Deacon Isaac North (1703-1788)</a></li>
+                <li><a href="john_north.html">John North</a></li>
+                <li><a href="abel_north.html">Abel North</a></li>
+                <li><a href="elizabeth_jane_herr.html">Elizabeth Jane Herr</a></li>
+            </ul>
+
+            <h3>👥 Key Family Members</h3>
+            <ul>
+                <li><a href="abel_north.html">Abel North</a></li>
+                <li><a href="elizabeth_jane_herr.html">Elizabeth Jane Herr</a></li>
+                <li><a href="birdie_musette_north.html">Birdie Musette North Bryant</a></li>
+                <li><a href="charles_lyman_north.html">Charles Lyman North</a></li>
+                <li><a href="cora_barbara_north.html">Cora Barbara North</a></li>
+                <li><a href="lucy_jane_north.html">Lucy Jane North</a></li>
+                <li><a href="mary_francis_north.html">Mary Francis North</a></li>
+                <li><a href="william_franklin_north.html">William Franklin North</a></li>
+                <li><a href="wilber_arthur_north.html">Wilber Arthur North</a></li>
+            </ul>
+
+            <h3>📍 Important Places</h3>
+            <ul>
+                <li><a href="champaign_county_ohio.html">Champaign County, Ohio</a></li>
+                <li><a href="north_family_locations.html">Family Homesteads</a></li>
+            </ul>
+
+            <h3>📚 Resources</h3>
+            <ul>
+                <li><a href="genealogy_records.html">Genealogy Records</a></li>
+                <li><a href="biographical_sketches.html">Biographical Sketches</a></li>
+                <li><a href="family_portraits.html">Family Portraits</a></li>
+                <li><a href="timeline_overview.html">Family Timeline</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="content">
+                <h1>👨‍👩‍👧‍👦 North Family People</h1>
+                
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Generations</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Family Members</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">285+</span>
+                        <span class="stat-label">Years of History</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Documented Lives</span>
+                    </div>
+                </div>
+
+                <p>Explore the rich tapestry of the North family heritage, featuring detailed profiles of family members spanning nearly three centuries. From our founding patriarch <strong>Deacon Isaac North (1703-1788)</strong> to the pioneering generations who shaped communities in Ohio and beyond.</p>
+
+                <!-- First Generation -->
+                <div class="generation-section">
+                    <h2 class="generation-title">🏛️ Founding Generation (1700s)</h2>
+                    <div class="people-grid">
+                        <div class="person-card">
+                            <h3>Deacon Isaac North</h3>
+                            <div class="dates">1703 - 1788 (85 years)</div>
+                            <div class="relationship">Founding Patriarch</div>
+                            <p>The earliest documented ancestor of the North family line. Served as a deacon and community leader in colonial America. His legacy established the foundation for generations of North family members who would continue his tradition of community service and leadership.</p>
+                            <div class="links">
+                                <a href="deacon_isaac_north.html">📖 Full Biography</a>
+                                <a href="documents.html">📋 Documents</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second Generation -->
+                <div class="generation-section">
+                    <h2 class="generation-title">🌾 Pioneer Generation (1800s)</h2>
+                    <div class="people-grid">
+                        <div class="person-card">
+                            <h3>John North</h3>
+                            <div class="relationship">Son of Deacon Isaac North</div>
+                            <p>Son of Deacon Isaac North, John continued the family tradition and played a crucial role in connecting the colonial era to the pioneering spirit of the 19th century. Father to Abel North, he helped establish the family presence in Ohio.</p>
+                            <div class="links">
+                                <a href="john_north.html">📖 Full Biography</a>
+                                <a href="timeline.html">📅 Timeline</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Abel North</h3>
+                            <div class="relationship">Son of John North</div>
+                            <p>Central figure in the North family genealogy, Abel North was a pioneering settler who established a strong presence in Champaign County, Ohio. Married to Elizabeth Jane Herr, he became the patriarch of a large and influential family.</p>
+                            <div class="links">
+                                <a href="abel_north.html">📖 Full Biography</a>
+                                <a href="photos.html">📸 Family Photos</a>
+                                <a href="documents.html">📋 Documents</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Elizabeth Jane Herr</h3>
+                            <div class="relationship">Wife of Abel North</div>
+                            <p>Matriarch of the Abel North family line, Elizabeth Jane Herr was a devoted wife and mother who helped establish the family homestead. Her partnership with Abel North created the foundation for their numerous children and descendants.</p>
+                            <div class="links">
+                                <a href="elizabeth_jane_herr.html">📖 Full Biography</a>
+                                <a href="photos.html">📸 Family Photos</a>
+                                <a href="timeline.html">📅 Timeline</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third Generation - Abel & Elizabeth's Children -->
+                <div class="generation-section">
+                    <h2 class="generation-title">👨‍👩‍👧‍👦 The Abel North Children</h2>
+                    <div class="people-grid">
+                        <div class="person-card">
+                            <h3>Birdie Musette North Bryant</h3>
+                            <div class="relationship">Daughter of Abel & Elizabeth</div>
+                            <p>Birdie Musette North married and became Birdie Musette North Bryant. She represents the continuation of the North family line and carried forward the family traditions and values into her own family.</p>
+                            <div class="links">
+                                <a href="birdie_musette_north.html">📖 Biography</a>
+                                <a href="photos.html">📸 Photos</a>
+                                <a href="timeline.html">📅 Timeline</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Charles Lyman North</h3>
+                            <div class="relationship">Son of Abel & Elizabeth</div>
+                            <p>Charles Lyman North was one of the sons of Abel and Elizabeth Jane Herr North. He contributed to the expansion and continuation of the North family legacy in Ohio and beyond.</p>
+                            <div class="links">
+                                <a href="charles_lyman_north.html">📖 Biography</a>
+                                <a href="timeline.html">📅 Timeline</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Cora Barbara North</h3>
+                            <div class="relationship">Daughter of Abel & Elizabeth</div>
+                            <p>Cora Barbara North was another daughter of the prolific Abel and Elizabeth Jane Herr North family. She represents the strong female presence in the North family genealogy.</p>
+                            <div class="links">
+                                <a href="cora_barbara_north.html">📖 Biography</a>
+                                <a href="timeline.html">📅 Timeline</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Lucy Jane North</h3>
+                            <div class="relationship">Daughter of Abel & Elizabeth</div>
+                            <p>Lucy Jane North continued the tradition of strong North family women. As a daughter of Abel and Elizabeth, she carried forward the family values and contributed to the community presence of the North family.</p>
+                            <div class="links">
+                                <a href="lucy_jane_north.html">📖 Biography</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Mary Francis North</h3>
+                            <div class="relationship">Daughter of Abel & Elizabeth</div>
+                            <p>Mary Francis North was another of the North daughters who helped expand the family influence and presence in their community. She represents the dedication to family that characterized the North lineage.</p>
+                            <div class="links">
+                                <a href="mary_francis_north.html">📖 Biography</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>William Franklin North</h3>
+                            <div class="relationship">Son of Abel & Elizabeth</div>
+                            <p>William Franklin North carried forward the North family name and traditions. As a son of Abel and Elizabeth, he contributed to the family's continued presence and influence in Ohio communities.</p>
+                            <div class="links">
+                                <a href="william_franklin_north.html">📖 Biography</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Wilber Arthur North</h3>
+                            <div class="relationship">Son of Abel & Elizabeth</div>
+                            <p>Wilber Arthur North was one of the sons who helped continue the North family legacy into the later 19th century. He represents the entrepreneurial and pioneering spirit that characterized the North family.</p>
+                            <div class="links">
+                                <a href="wilber_arthur_north.html">📖 Biography</a>
+                            </div>
+                        </div>
+
+                        <div class="person-card">
+                            <h3>Adeliaide L North</h3>
+                            <div class="relationship">Daughter of Abel & Elizabeth</div>
+                            <p>Adeliaide L North was another daughter of the North family who contributed to the rich family heritage. Her story is preserved through family timelines and historical documents.</p>
+                            <div class="links">
+                                <a href="timeline.html">📅 Timeline</a>
+                                <a href="photos.html">📸 Family Photos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>🔍 Research & Documentation</h2>
+                <p>The North family genealogy is extensively documented through:</p>
+                <ul>
+                    <li><strong>📋 Biographical Sketches</strong> - Detailed life stories and historical context</li>
+                    <li><strong>📸 Family Portraits</strong> - Original photographs and family group pictures</li>
+                    <li><strong>📅 Timeline Documents</strong> - Chronological family histories and major events</li>
+                    <li><strong>🏛️ Historical Records</strong> - Official documents, certificates, and genealogy records</li>
+                    <li><strong>📍 Location Records</strong> - Documentation of family homesteads and community involvement</li>
+                </ul>
+
+                <p>This comprehensive collection spans <strong>285+ years</strong> of North family history, from Deacon Isaac North's birth in 1703 through multiple generations of pioneering ancestors who helped shape communities in Ohio and beyond.</p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development Prototype Banner */
+        .dev-banner {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .dev-banner .dev-text {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Hero section */
+        .hero-section {
+            background: linear-gradient(135deg, #e8f4f8, #d4edda);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            color: #1a4d6b;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Photo sections */
+        .photo-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .photo-section h2 {
+            color: #1a4d6b;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+        }
+        
+        /* Photo gallery grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .photo-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #e9ecef;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border: 2px solid #2d7aa0;
+        }
+        
+        .photo-item h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .photo-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .photo-item .photo-date {
+            color: #2d7aa0;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        
+        /* Portrait gallery - special styling for portraits */
+        .portrait-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .portrait-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .portrait-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .portrait-item img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 4px solid #2d7aa0;
+        }
+        
+        .portrait-item h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .portrait-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Timeline images - special grid */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .timeline-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 4px solid #2d7aa0;
+        }
+        
+        .timeline-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-item h3 {
+            color: #1a4d6b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Family tree highlight */
+        .family-highlight {
+            background: linear-gradient(135deg, #fff8e1, #e3f2fd);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .family-highlight h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+        }
+        
+        .family-highlight p {
+            color: #555;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="timeline.html" class="nav-button">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-section">
+            <h2>📸 North Family Photo Archive</h2>
+            <p>Explore our extensive collection of family portraits, historical photographs, timeline images, and genealogical documents that preserve the visual history of the North family across multiple generations.</p>
+        </div>
+
+        <!-- Main Family Portraits -->
+        <div class="photo-section">
+            <h2>👨‍👩‍👧‍👦 Family Portraits</h2>
+            <div class="portrait-grid">
+                <div class="portrait-item">
+                    <img src="extracted/Abel%20North.JPG" alt="Abel North">
+                    <h3>Abel North</h3>
+                    <p>Patriarch of the Ohio North family line. Central figure in establishing the family presence in Champaign County.</p>
+                </div>
+                
+                <div class="portrait-item">
+                    <img src="extracted/Elizabeth%20Jane%20Herr.JPG" alt="Elizabeth Jane Herr North">
+                    <h3>Elizabeth Jane Herr North</h3>
+                    <p>Matriarch and wife of Abel North. Her marriage united the North and Herr family lines.</p>
+                </div>
+                
+                <div class="portrait-item">
+                    <img src="extracted/Wilber%20Arthur%20North.jpg" alt="Wilber Arthur North">
+                    <h3>Wilber Arthur North</h3>
+                    <p>Son of Abel and Elizabeth Jane North. Part of the next generation of the Ohio branch.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Family Group Photos -->
+        <div class="photo-section">
+            <h2>🏛️ Historical Family Photos</h2>
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="extracted/Abel%20North%20Family%20portrait.JPG" alt="Abel North Family Portrait">
+                    <h3>Abel North Family Portrait</h3>
+                    <p>Historical group photograph of the Abel North family. This portrait includes multiple family members and represents one of the most comprehensive visual records of the family.</p>
+                    <div class="photo-date">Historic Family Portrait</div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="extracted/Birdie%20Musette%20North%20Bryant.jpg" alt="Birdie Musette North Bryant">
+                    <h3>Birdie Musette North Bryant</h3>
+                    <p>Portrait of Birdie Musette North Bryant, daughter of Abel and Elizabeth Jane North. Well-documented family member with multiple photographs preserved.</p>
+                    <div class="photo-date">Individual Portrait</div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="extracted/Birdie%20Musette%20North%20Bryant2.jpg" alt="Birdie Musette North Bryant - Second Photo">
+                    <h3>Birdie Musette North Bryant (Second Photo)</h3>
+                    <p>Additional photograph of Birdie Musette North Bryant, showing different period clothing and setting. Demonstrates the family's commitment to preserving multiple images.</p>
+                    <div class="photo-date">Second Portrait</div>
+                </div>
+                
+                <div class="photo-item">
+                    <img src="extracted/William%20Franklin%20North%201870-1933.jpg" alt="William Franklin North">
+                    <h3>William Franklin North (1870-1933)</h3>
+                    <p>Photograph of William Franklin North, showing his full life span dates. Son of Abel and Elizabeth Jane North, extensively documented with biographical materials.</p>
+                    <div class="photo-date">1870-1933</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Documents -->
+        <div class="photo-section">
+            <h2>📅 Timeline Documents</h2>
+            <div class="timeline-grid">
+                <div class="timeline-item">
+                    <img src="extracted/Abel%20North%20Timeline.jpg" alt="Abel North Timeline">
+                    <h3>Abel North Timeline</h3>
+                    <p>Visual chronological documentation of Abel North's life events, achievements, and family milestones. This timeline provides structured historical context for understanding his role in family history.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Elizabeth%20Jane%20Herr%20Timeline.jpg" alt="Elizabeth Jane Herr Timeline">
+                    <h3>Elizabeth Jane Herr Timeline</h3>
+                    <p>Timeline documentation for Elizabeth Jane Herr, showing her life events and contributions as matriarch of the family. Traces her journey from the Herr family line to becoming a North.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Birdie%20Musette%20North%20Timeline%201.jpg" alt="Birdie Musette North Timeline 1">
+                    <h3>Birdie Musette North Timeline (Part 1)</h3>
+                    <p>First part of Birdie Musette North's life timeline, documenting her early years and development as part of the North family's next generation.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Birdie%20Musette%20North%20Timeline%202.jpg" alt="Birdie Musette North Timeline 2">
+                    <h3>Birdie Musette North Timeline (Part 2)</h3>
+                    <p>Continuation of Birdie Musette North's timeline, showing her later life events, marriage to Bryant, and ongoing family contributions.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Charles%20Lyman%20North%20Timeline%201.jpg" alt="Charles Lyman North Timeline 1">
+                    <h3>Charles Lyman North Timeline (Part 1)</h3>
+                    <p>Timeline documentation for Charles Lyman North, son of Abel and Elizabeth Jane. First part covers his early life and family development.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Charles%20Lyman%20North%20Timeline%202.jpg" alt="Charles Lyman North Timeline 2">
+                    <h3>Charles Lyman North Timeline (Part 2)</h3>
+                    <p>Second part of Charles Lyman North's timeline, documenting his later achievements and role in continuing the North family legacy.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Cora%20Barbara%20North%20Timeline.jpg" alt="Cora Barbara North Timeline">
+                    <h3>Cora Barbara North Timeline</h3>
+                    <p>Life timeline for Cora Barbara North, daughter of Abel and Elizabeth Jane. Documents her personal history and contributions to the family story.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Lucy%20Jane%20North%20Timeline.jpg" alt="Lucy Jane North Timeline">
+                    <h3>Lucy Jane North Timeline</h3>
+                    <p>Timeline documentation for Lucy Jane North, another daughter of Abel and Elizabeth Jane North. Shows her life events and family connections.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Mary%20Francis%20North%20Timeline.jpg" alt="Mary Francis North Timeline">
+                    <h3>Mary Francis North Timeline</h3>
+                    <p>Life timeline for Mary Francis North, documenting her role as daughter in the Abel North family and her personal historical journey.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/William%20Franklin%20North%20Timeline%201.jpg" alt="William Franklin North Timeline 1">
+                    <h3>William Franklin North Timeline (Part 1)</h3>
+                    <p>First part of William Franklin North's comprehensive timeline, covering his birth in 1870 and early life development within the North family.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/William%20Franklin%20North%20Timeline%202.jpg" alt="William Franklin North Timeline 2">
+                    <h3>William Franklin North Timeline (Part 2)</h3>
+                    <p>Second part of William Franklin North's timeline, documenting his later life through to his death in 1933, showing his full 63-year life span.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <img src="extracted/Adeliaide%20L%20North%20Timeline%201.jpg" alt="Adelaide L North Timeline">
+                    <h3>Adelaide L North Timeline</h3>
+                    <p>Timeline documentation for Adelaide L North, providing chronological context for another member of the extended North family network.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="family-highlight">
+            <h3>🏛️ Preserving Family History Through Photography</h3>
+            <p>The North family's extensive photographic archive represents one of the most comprehensive visual records of 19th and early 20th-century pioneer family life. These images, combined with detailed timeline documentation, provide invaluable insights into the lives, relationships, and historical context of our ancestors.</p>
+        </div>
+
+        <!-- Photo Archive Statistics -->
+        <div class="photo-section">
+            <h2>📊 Photo Archive Statistics</h2>
+            <div class="photo-grid">
+                <div class="photo-item" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-size: 2rem; color: #1a4d6b;">25+</h3>
+                    <p>Historical photographs and documents preserved in the North family archive</p>
+                </div>
+                
+                <div class="photo-item" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-size: 2rem; color: #1a4d6b;">12</h3>
+                    <p>Detailed timeline documents covering multiple family members across generations</p>
+                </div>
+                
+                <div class="photo-item" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-size: 2rem; color: #1a4d6b;">9</h3>
+                    <p>Individual family members documented with personal portraits and timelines</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo-section">
+            <h2>📋 Using This Photo Archive</h2>
+            <p style="margin-bottom: 1rem;">This comprehensive photo collection serves multiple purposes for North family research and remembrance:</p>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li><strong>Genealogical Research</strong> - Visual identification of family members and relationships</li>
+                <li><strong>Historical Context</strong> - Timeline documents provide chronological framework</li>
+                <li><strong>Family Recognition</strong> - Portraits help identify individuals in group photographs</li>
+                <li><strong>Cultural Heritage</strong> - Clothing, settings, and photography styles reflect historical periods</li>
+                <li><strong>Story Preservation</strong> - Visual documentation supports family narratives and memories</li>
+            </ul>
+            
+            <p><strong>Navigation:</strong> Use the links throughout this site to explore individual family member pages, read biographical sketches, and discover more about the places and events that shaped North family history.</p>
+        </div>
+    </div>
+</body>
+</html>

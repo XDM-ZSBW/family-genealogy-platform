@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - North Family Genealogy</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        /* Development Prototype Banner */
+        .dev-banner {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .dev-banner .dev-text {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a4d6b, #2d7aa0);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-button {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .nav-button:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        /* Main container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Hero section */
+        .hero-section {
+            background: linear-gradient(135deg, #e8f4f8, #d4edda);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            color: #1a4d6b;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Document sections */
+        .document-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .document-section h2 {
+            color: #1a4d6b;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #2d7aa0;
+            padding-bottom: 1rem;
+        }
+        
+        /* Document grid */
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .document-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #2d7aa0;
+        }
+        
+        .document-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .document-item h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .document-item p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .document-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9rem;
+        }
+        
+        .document-type {
+            background: #2d7aa0;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .document-date {
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Special document types */
+        .biographical {
+            border-left-color: #27ae60;
+        }
+        
+        .biographical .document-type {
+            background: #27ae60;
+        }
+        
+        .genealogical {
+            border-left-color: #8e44ad;
+        }
+        
+        .genealogical .document-type {
+            background: #8e44ad;
+        }
+        
+        .transcription {
+            border-left-color: #e67e22;
+        }
+        
+        .transcription .document-type {
+            background: #e67e22;
+        }
+        
+        .historical {
+            border-left-color: #c0392b;
+        }
+        
+        .historical .document-type {
+            background: #c0392b;
+        }
+        
+        /* Document categories */
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        
+        .category-tab {
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        
+        .category-tab:hover,
+        .category-tab.active {
+            background: #2d7aa0;
+            color: white;
+        }
+        
+        /* Archive highlight */
+        .archive-highlight {
+            background: linear-gradient(135deg, #fff8e1, #e3f2fd);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .archive-highlight h3 {
+            color: #1a4d6b;
+            margin-bottom: 1rem;
+        }
+        
+        .archive-highlight p {
+            color: #555;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Development Prototype Banner -->
+    <div class="dev-banner">
+        <div class="dev-text">
+            🚧 Development Prototype - Family Genealogy Platform - This is a preview of upcoming features
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1>🏛️ North Family Genealogy</h1>
+            <nav class="nav-buttons">
+                <a href="index.html" class="nav-button">🏠 Home</a>
+                <a href="people.html" class="nav-button">👨‍👩‍👧‍👦 People</a>
+                <a href="places.html" class="nav-button">📍 Places</a>
+                <a href="timeline.html" class="nav-button">📅 Timeline</a>
+                <a href="documents.html" class="nav-button">📋 Documents</a>
+                <a href="photos.html" class="nav-button">📸 Photos</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-section">
+            <h2>📋 North Family Document Archive</h2>
+            <p>Discover our comprehensive collection of historical documents, genealogical records, biographical sketches, and transcribed materials that preserve the written history of the North family heritage.</p>
+        </div>
+
+        <!-- Document Categories -->
+        <div class="document-section">
+            <h2>📂 Document Categories</h2>
+            <div class="category-tabs">
+                <div class="category-tab active">📋 All Documents</div>
+                <div class="category-tab">👤 Biographical</div>
+                <div class="category-tab">🌳 Genealogical</div>
+                <div class="category-tab">✍️ Transcriptions</div>
+                <div class="category-tab">🏛️ Historical</div>
+            </div>
+        </div>
+
+        <!-- Biographical Documents -->
+        <div class="document-section">
+            <h2>👤 Biographical Sketches</h2>
+            <div class="document-grid">
+                <div class="document-item biographical">
+                    <h3>📄 Biographical Sketch of Abel North of Champaign County Ohio</h3>
+                    <p>Comprehensive biographical account detailing Abel North's life, achievements, and contributions to the community in Champaign County, Ohio. This document serves as one of the most detailed records of Abel's personal and professional life.</p>
+                    <p><strong>Key Contents:</strong> Personal history, family background, community involvement, professional achievements, and legacy documentation.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Biographical</span>
+                        <span class="document-date">Historical Document</span>
+                    </div>
+                </div>
+                
+                <div class="document-item transcription">
+                    <h3>✍️ Excerpts from Book of John North (Transcribed)</h3>
+                    <p>Transcribed excerpts from historical writings about John North, providing valuable insights into the family's earlier generations and their connections to Abel North's lineage.</p>
+                    <p><strong>Key Contents:</strong> Family stories, historical context, genealogical connections, and preserved family narratives from earlier periods.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Transcription</span>
+                        <span class="document-date">November 22, 2022</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Genealogical Records -->
+        <div class="document-section">
+            <h2>🌳 Genealogical Records</h2>
+            <div class="document-grid">
+                <div class="document-item genealogical">
+                    <h3>📊 Pedigree Views to Abel North and Elizabeth Jayne Herr</h3>
+                    <p>Professional genealogical documentation tracing the family lineage leading to Abel North and Elizabeth Jane Herr. This comprehensive pedigree chart shows the connections between multiple family lines.</p>
+                    <p><strong>Key Contents:</strong> Family tree structure, ancestral connections, marriage records, birth/death dates, and lineage verification.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Genealogical</span>
+                        <span class="document-date">Research Document</span>
+                    </div>
+                </div>
+                
+                <div class="document-item genealogical">
+                    <h3>📚 North Genealogy Records (Part 1)</h3>
+                    <p>First volume of comprehensive North family genealogical research, containing detailed family connections, birth records, marriage documentation, and ancestral tracking.</p>
+                    <p><strong>Key Contents:</strong> Family connections, vital records, ancestral documentation, and genealogical research findings.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Genealogical</span>
+                        <span class="document-date">June 8, 2007</span>
+                    </div>
+                </div>
+                
+                <div class="document-item genealogical">
+                    <h3>📚 North Genealogy Records (Part 2)</h3>
+                    <p>Second volume of North family genealogical documentation, continuing the comprehensive family research with additional branches, connections, and historical verification.</p>
+                    <p><strong>Key Contents:</strong> Extended family connections, additional generations, supporting documentation, and research verification.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Genealogical</span>
+                        <span class="document-date">June 8, 2007</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historical Documents -->
+        <div class="document-section">
+            <h2>🏛️ Historical Documents</h2>
+            <div class="document-grid">
+                <div class="document-item historical">
+                    <h3>📜 Deacon Isaac North (1703-1788)</h3>
+                    <p>Historical documentation about Deacon Isaac North, the earliest documented ancestor in the North family line. This document provides crucial context for understanding the family's colonial American origins.</p>
+                    <p><strong>Key Contents:</strong> Early American colonial life, religious leadership role, community contributions, and family establishment in America.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Historical</span>
+                        <span class="document-date">January 19, 2014</span>
+                    </div>
+                </div>
+                
+                <div class="document-item biographical">
+                    <h3>👨 Abel North Family Portrait Identification</h3>
+                    <p>Detailed identification document for the Abel North family portrait, providing names, relationships, and contextual information for individuals appearing in the historical family photograph.</p>
+                    <p><strong>Key Contents:</strong> Portrait identification, family member names, relationships, historical context, and photographic documentation.</p>
+                    <div class="document-meta">
+                        <span class="document-type">Identification</span>
+                        <span class="document-date">December 20, 2014</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Documents -->
+        <div class="document-section">
+            <h2>📅 Visual Timeline Documentation</h2>
+            <p style="margin-bottom: 2rem;">The North family maintains extensive visual timeline documentation for multiple family members. These timeline images are available in our <a href="photos.html" style="color: #2d7aa0; text-decoration: none;">Photo Archive</a> and provide chronological context for family history.</p>
+            
+            <div class="document-grid">
+                <div class="document-item">
+                    <h3>📊 Family Timeline Collection</h3>
+                    <p>Our comprehensive timeline documentation includes visual chronologies for the following family members:</p>
+                    <ul style="margin-left: 2rem; color: #666;">
+                        <li>Abel North - Life events and achievements</li>
+                        <li>Elizabeth Jane Herr - Personal history and family contributions</li>
+                        <li>Birdie Musette North - Two-part timeline documentation</li>
+                        <li>Charles Lyman North - Two-part chronological record</li>
+                        <li>Cora Barbara North - Personal timeline documentation</li>
+                        <li>Lucy Jane North - Life events chronology</li>
+                        <li>Mary Francis North - Personal historical timeline</li>
+                        <li>William Franklin North - Two-part comprehensive timeline (1870-1933)</li>
+                        <li>Adelaide L North - Extended family timeline documentation</li>
+                    </ul>
+                    <div class="document-meta">
+                        <span class="document-type">Visual Timeline</span>
+                        <span class="document-date">Multiple Dates</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="archive-highlight">
+            <h3>📚 Document Preservation & Research</h3>
+            <p>The North family document archive represents decades of genealogical research, family history preservation, and biographical documentation. These materials provide invaluable resources for understanding 19th-century pioneer family life, community development in Ohio, and the interconnections between multiple family lineages.</p>
+        </div>
+
+        <!-- Research Guidelines -->
+        <div class="document-section">
+            <h2>🔍 Using This Document Archive</h2>
+            <div class="document-grid">
+                <div class="document-item">
+                    <h3>📋 Research Guidelines</h3>
+                    <p><strong>For Family Research:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>Start with biographical sketches for personal context</li>
+                        <li>Use genealogical records for family connections</li>
+                        <li>Reference timeline documents for chronological framework</li>
+                        <li>Cross-reference with photographic evidence</li>
+                    </ul>
+                    <p><strong>Document Types:</strong> Each document is categorized by type and includes metadata for easy identification and research planning.</p>
+                </div>
+                
+                <div class="document-item">
+                    <h3>🌐 Related Resources</h3>
+                    <p>Enhance your research by exploring related sections:</p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li><strong><a href="people.html" style="color: #2d7aa0;">People Pages</a></strong> - Individual family member profiles</li>
+                        <li><strong><a href="photos.html" style="color: #2d7aa0;">Photo Archive</a></strong> - Visual documentation and timeline images</li>
+                        <li><strong><a href="timeline.html" style="color: #2d7aa0;">Family Timeline</a></strong> - Chronological family history</li>
+                        <li><strong><a href="places.html" style="color: #2d7aa0;">Places</a></strong> - Geographic context and locations</li>
+                    </ul>
+                </div>
+                
+                <div class="document-item">
+                    <h3>📊 Archive Statistics</h3>
+                    <p><strong>Document Collection:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>25+ historical documents and photographs</li>
+                        <li>12 detailed timeline visualizations</li>
+                        <li>Multiple biographical sketches</li>
+                        <li>Professional genealogical research</li>
+                        <li>Transcribed historical materials</li>
+                        <li>Family portrait identification guides</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
